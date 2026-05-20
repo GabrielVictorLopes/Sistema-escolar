@@ -1,0 +1,27 @@
+<div class="layout">
+
+  <aside class="sidebar">
+    <h2>S.O.C.E</h2>
+    <p>Sistema Escolar</p>
+
+    <div class="menu-group">
+      <h3>Cadastros</h3>
+
+      <a routerLink="/aluno">Cadastro de Aluno</a>
+      <a routerLink="/professor">Cadastro Professor</a>
+      <a routerLink="/fornecedor">Fornecedor</a>
+    </div>
+
+    <div class="menu-group">
+      <h3>Notas / Faltas</h3>
+
+      <a routerLink="/notas">Lançar Notas</a>
+      <a routerLink="/faltas">Lançar Faltas</a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</div>
