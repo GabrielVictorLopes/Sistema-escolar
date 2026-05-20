@@ -1,0 +1,52 @@
+<div class="container">
+
+  <h1>Lançamento de Notas</h1>
+
+  <div class="form-grid">
+
+    <input
+      type="text"
+      placeholder="Nome do aluno"
+      [(ngModel)]="aluno"
+    />
+
+    <input
+      type="text"
+      placeholder="Disciplina"
+      [(ngModel)]="disciplina"
+    />
+
+    <select [(ngModel)]="bimestre">
+      <option value="">Bimestre</option>
+      <option value="1">1º Bimestre</option>
+      <option value="2">2º Bimestre</option>
+      <option value="3">3º Bimestre</option>
+      <option value="4">4º Bimestre</option>
+    </select>
+
+    <input
+      type="number"
+      placeholder="Nota"
+      [(ngModel)]="nota"
+    />
+
+    <textarea
+      placeholder="Observação"
+      [(ngModel)]="observacao">
+    </textarea>
+
+  </div>
+
+  <div class="buttons">
+
+    <button (click)="salvar()">
+      Salvar Nota
+    </button>
+
+    <button (click)="cancelar()">
+      Limpar
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,46 @@
+.container{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+input,
+select{
+  padding:14px;
+  border:1px solid #ccc;
+  border-radius:10px;
+  font-size:16px;
+}
+
+.buttons{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+}
+
+button{
+  border:none;
+  padding:14px 24px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button:first-child{
+  background:#1976d2;
+  color:white;
+}
+
+button:last-child{
+  background:#e53935;
+  color:white;
+}

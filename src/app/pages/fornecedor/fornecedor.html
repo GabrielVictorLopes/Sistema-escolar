@@ -1,0 +1,94 @@
+<div class="container">
+
+  <h1>Cadastro de Fornecedor</h1>
+
+  <div class="form-grid">
+
+    <input
+      type="text"
+      placeholder="Nome da empresa"
+      [(ngModel)]="empresa"
+    />
+
+    <input
+      type="text"
+      placeholder="CNPJ"
+      maxlength="14"
+      [(ngModel)]="cnpj"
+    />
+
+    <input
+      type="text"
+      placeholder="Responsável"
+      [(ngModel)]="responsavel"
+    />
+
+    <input
+      type="text"
+      placeholder="Telefone"
+      [(ngModel)]="telefone"
+    />
+
+    <input
+      type="email"
+      placeholder="E-mail"
+      [(ngModel)]="email"
+    />
+
+    <input
+      type="text"
+      placeholder="Produto/Serviço"
+      [(ngModel)]="produto"
+    />
+
+    <textarea
+      placeholder="Observações"
+      [(ngModel)]="observacao">
+    </textarea>
+
+    <input
+      type="text"
+      placeholder="Rua"
+      [(ngModel)]="rua"
+    />
+
+    <input
+      type="text"
+      placeholder="Bairro"
+      [(ngModel)]="bairro"
+    />
+
+    <input
+      type="text"
+      placeholder="Número"
+      [(ngModel)]="numero"
+    />
+
+    <input
+      type="text"
+      placeholder="CEP"
+      maxlength="8"
+      [(ngModel)]="cep"
+    />
+
+    <input
+      type="text"
+      placeholder="Complemento"
+      [(ngModel)]="complemento"
+    />
+
+  </div>
+
+  <div class="buttons">
+
+    <button (click)="cadastrar()">
+      Cadastrar
+    </button>
+
+    <button (click)="cancelar()">
+      Cancelar
+    </button>
+
+  </div>
+
+</div>

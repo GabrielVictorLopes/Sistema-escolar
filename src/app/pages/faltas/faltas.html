@@ -1,0 +1,49 @@
+<div class="container">
+
+  <h1>Lançamento de Faltas</h1>
+
+  <div class="form-grid">
+
+    <input
+      type="text"
+      placeholder="Nome do aluno"
+      [(ngModel)]="aluno"
+    />
+
+    <input
+      type="text"
+      placeholder="Disciplina"
+      [(ngModel)]="disciplina"
+    />
+
+    <input
+      type="date"
+      [(ngModel)]="data"
+    />
+
+    <input
+      type="number"
+      placeholder="Quantidade de faltas"
+      [(ngModel)]="quantidade"
+    />
+
+    <textarea
+      placeholder="Justificativa"
+      [(ngModel)]="justificativa">
+    </textarea>
+
+  </div>
+
+  <div class="buttons">
+
+    <button (click)="salvar()">
+      Salvar Falta
+    </button>
+
+    <button (click)="cancelar()">
+      Limpar
+    </button>
+
+  </div>
+
+</div>

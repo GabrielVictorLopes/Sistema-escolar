@@ -1,0 +1,111 @@
+<div class="container">
+
+  <h1>Cadastro de Aluno</h1>
+
+  <div class="form-grid">
+
+    <input
+      type="text"
+      placeholder="Nome"
+      [(ngModel)]="nome"
+    />
+
+    <input
+      type="text"
+      placeholder="CPF"
+      maxlength="11"
+      [(ngModel)]="cpf"
+    />
+
+    <input
+      type="text"
+      placeholder="RG"
+      maxlength="9"
+      [(ngModel)]="rg"
+    />
+
+    <select [(ngModel)]="sexo">
+      <option value="">Sexo</option>
+      <option value="F">Feminino</option>
+      <option value="M">Masculino</option>
+    </select>
+
+    <input
+      type="text"
+      placeholder="Nome da mãe"
+      [(ngModel)]="nomeMae"
+    />
+
+    <input
+      type="text"
+      placeholder="Telefone da mãe"
+      [(ngModel)]="telMae"
+    />
+
+    <input
+      type="text"
+      placeholder="Nome do pai"
+      [(ngModel)]="nomePai"
+    />
+
+    <input
+      type="text"
+      placeholder="Telefone do pai"
+      [(ngModel)]="telPai"
+    />
+
+    <select [(ngModel)]="medicamento">
+      <option value="">Medicamento?</option>
+      <option value="sim">Sim</option>
+      <option value="nao">Não</option>
+    </select>
+
+    <textarea
+      placeholder="Observação"
+      [(ngModel)]="observacao">
+    </textarea>
+
+    <input
+      type="text"
+      placeholder="Rua"
+      [(ngModel)]="rua"
+    />
+
+    <input
+      type="text"
+      placeholder="Bairro"
+      [(ngModel)]="bairro"
+    />
+
+    <input
+      type="text"
+      placeholder="Número"
+      [(ngModel)]="numero"
+    />
+
+    <input
+      type="text"
+      placeholder="CEP"
+      maxlength="8"
+      [(ngModel)]="cep"
+    />
+
+    <input
+      type="text"
+      placeholder="Complemento"
+      [(ngModel)]="complemento"
+    />
+
+  </div>
+
+  <div class="buttons">
+    <button (click)="cadastrar()">
+      Cadastrar
+    </button>
+
+    <button (click)="cancelar()">
+      Cancelar
+    </button>
+  </div>
+
+</div>
