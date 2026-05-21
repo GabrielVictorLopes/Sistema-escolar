@@ -1,7 +1,6 @@
 .home-container {
-  min-height: 100vh;
-  background: #f5f7fb;
-  padding: 40px;
+  min-height: 100%;
+  background: #ffffff;
 }
 
 .hero {
@@ -13,34 +12,22 @@
 }
 
 .logo {
-  width: 280px;
+  width: 700px;
   max-width: 100%;
-  margin-bottom: 20px;
-}
-
-h1 {
-  font-size: 56px;
-  font-weight: bold;
-  margin: 0;
-  color: #1e293b;
-}
-
-.subtitle {
-  font-size: 20px;
-  color: #64748b;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .cards {
-  margin-top: 50px;
+  margin-top: 30px;
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 25px;
+  font-weight: bold;
 }
 
 .card {
-  background: white;
+  background: #ffffff;
   border-radius: 20px;
   padding: 30px;
 
