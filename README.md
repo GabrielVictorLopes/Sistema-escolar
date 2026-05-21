@@ -1,59 +1,273 @@
-# SistemaEscolar
+# 🎓 S.O.C.E – Sistema Operacional de Controle Escolar
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+Sistema escolar desenvolvido em **Angular + Angular Material**, com funcionalidades de cadastro de alunos, professores, fornecedores e gerenciamento de notas e faltas.
 
-## Development server
+---
 
-To start a local development server, run:
+## 📌 Funcionalidades
+
+✅ Cadastro de alunos  
+✅ Cadastro de professores  
+✅ Cadastro de fornecedores  
+✅ Controle de notas  
+✅ Controle de faltas  
+✅ Interface moderna com Angular Material  
+🚧 Banco de dados (em desenvolvimento)
+
+---
+
+## 🖼️ Preview do Sistema
+
+Home do sistema com dashboard escolar e acesso rápido às funcionalidades.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- Angular (versão mais atual)
+- Angular Material
+- TypeScript
+- HTML5
+- CSS3
+
+---
+
+## 📥 Como baixar e rodar o projeto
+
+### 1. Clonar o repositório
+
+Abra o terminal (CMD, PowerShell, Git Bash ou terminal do VSCode) e execute:
+
+```bash
+git clone https://github.com/GabrielVictorLopes/Sistema-escolar.git
+```
+
+Depois entre na pasta:
+
+```bash
+cd Sistema-escolar
+```
+
+---
+
+## 2. Instalar o Node.js
+
+Antes de rodar o projeto, você precisa instalar o Node.js.
+
+Baixe a versão **LTS**:
+
+:contentReference[oaicite:0]{index=0}
+
+Após instalar, reinicie o computador.
+
+Verifique se instalou corretamente:
+
+```bash
+node -v
+npm -v
+```
+
+Exemplo esperado:
+
+```bash
+v22.x.x
+10.x.x
+```
+
+---
+
+## 3. Instalar Angular CLI
+
+No terminal execute:
+
+```bash
+npm install -g @angular/cli
+```
+
+Verifique a instalação:
+
+```bash
+ng version
+```
+
+---
+
+## 4. Instalar dependências do projeto
+
+Dentro da pasta do projeto rode:
+
+```bash
+npm install
+```
+
+Esse comando instalará todas as dependências necessárias.
+
+---
+
+## 5. Rodar o projeto
+
+Execute:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+ou
 
 ```bash
-ng generate component component-name
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Se o comando `ng` não funcionar:
 
 ```bash
-ng generate --help
+npx ng serve
 ```
 
-## Building
+---
 
-To build the project run:
+## 6. Abrir no navegador
+
+Depois de iniciar o projeto, abra:
+
+```txt
+http://localhost:4200
+```
+
+---
+
+## 🔄 Atualizar dependências (opcional)
+
+Caso queira atualizar dependências:
 
 ```bash
-ng build
+npm update
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🧹 Problemas comuns
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+### ❌ `ng is not recognized`
+
+Instale o Angular CLI:
 
 ```bash
-ng test
+npm install -g @angular/cli
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+ou use:
 
 ```bash
-ng e2e
+npx ng serve
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+### ❌ `Cannot find module 'typescript'`
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Execute:
+
+```bash
+npm install
+```
+
+---
+
+### ❌ `This command is not available when running the Angular CLI outside a workspace`
+
+Você não está na pasta do projeto.
+
+Entre nela:
+
+```bash
+cd Sistema-escolar
+```
+
+Verifique se existe:
+
+```bash
+angular.json
+package.json
+src
+```
+
+---
+
+### ❌ Porta 4200 ocupada
+
+Rode em outra porta:
+
+```bash
+ng serve --port 4300
+```
+
+Abra:
+
+```txt
+http://localhost:4300
+```
+
+---
+
+## 📁 Estrutura do Projeto
+
+```txt
+src/
+ ├── app/
+ │   ├── pages/
+ │   │   ├── aluno/
+ │   │   ├── professor/
+ │   │   ├── fornecedor/
+ │   │   ├── notas/
+ │   │   ├── faltas/
+ │   │   └── home/
+ │   ├── components/
+ │   ├── app.routes.ts
+ │   ├── app.ts
+ │   ├── app.html
+ │   └── app.css
+ ├── public/
+ └── styles.css
+```
+
+---
+
+## 👨‍💻 Desenvolvedor
+
+Desenvolvido por Gabriel Victor Lopes.
+
+GitHub:
+
+:contentReference[oaicite:1]{index=1}
+
+---
+
+## 🚀 Como contribuir
+
+1. Faça um fork do projeto
+2. Crie uma branch:
+
+```bash
+git checkout -b minha-feature
+```
+
+3. Commit das alterações:
+
+```bash
+git commit -m "Minha melhoria"
+```
+
+4. Push:
+
+```bash
+git push origin minha-feature
+```
+
+5. Abra um Pull Request
+
+---
+
+## 📄 Licença
+
+Projeto para fins educacionais.
