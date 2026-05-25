@@ -1,0 +1,343 @@
+<div class="container">
+
+  <div class="header-section">
+    <h1>Contas a Receber</h1>
+
+    <!-- Alternador de Abas -->
+    <div class="tab-container">
+      <button 
+        class="tab-btn" 
+        [class.active]="abaAtiva === 'lista'"
+        (click)="abaAtiva = 'lista'">
+        Visualizar Contas
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="abaAtiva === 'cadastro'"
+        (click)="abaAtiva = 'cadastro'">
+        Novo Lançamento
+      </button>
+    </div>
+  </div>
+
+  <!-- ABA: LISTAGEM E DASHBOARD -->
+  <div *ngIf="abaAtiva === 'lista'">
+    
+    <!-- Painel de Métricas -->
+    <div class="metrics-grid">
+      <div class="metric-card card-pago">
+        <div class="metric-info">
+          <span class="metric-label">Total Recebido</span>
+          <span class="metric-value">{{ totalRecebido | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+        </div>
+        <div class="metric-icon">
+          <span class="material-icons">check_circle</span>
+        </div>
+      </div>
+
+      <div class="metric-card card-pendente">
+        <div class="metric-info">
+          <span class="metric-label">Total Pendente</span>
+          <span class="metric-value">{{ totalPendente | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+        </div>
+        <div class="metric-icon">
+          <span class="material-icons">hourglass_empty</span>
+        </div>
+      </div>
+
+      <div class="metric-card card-atrasado">
+        <div class="metric-info">
+          <span class="metric-label">Total em Atraso</span>
+          <span class="metric-value">{{ totalAtrasado | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+        </div>
+        <div class="metric-icon">
+          <span class="material-icons">warning</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de Filtros -->
+    <div class="filters-bar">
+      <div class="filter-input-group search-group">
+        <input 
+          type="text" 
+          placeholder="Buscar por cliente ou descrição..." 
+          [(ngModel)]="buscaCliente" 
+          class="filter-input"
+        />
+      </div>
+      <div class="filter-input-group select-group">
+        <select [(ngModel)]="filtroStatus" class="filter-select">
+          <option value="">Todos os Status</option>
+          <option value="Pago">Pago</option>
+          <option value="Pendente">Pendente</option>
+          <option value="Atrasado">Atrasado</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabela de Contas -->
+    <div class="table-container">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente (Aluno)</th>
+            <th>Descrição</th>
+            <th>Vencimento</th>
+            <th>Valor Total</th>
+            <th>Status</th>
+            <th>Forma Pagto.</th>
+            <th>Parcela</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let conta of contasFiltradas" [class.row-atrasado]="conta.Status === 'Atrasado'">
+            <td>#{{ conta.ID_ContaReceber }}</td>
+            <td class="font-semibold">{{ conta.ID_Cliente }}</td>
+            <td>{{ conta.Descricao }}</td>
+            <td>{{ conta.Data_Vencimento | date:'dd/MM/yyyy' }}</td>
+            <td class="font-bold">
+              {{ conta.Valor_Total | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+              <div *ngIf="conta.Status === 'Atrasado' && (conta.Juros || conta.Multa)" class="tax-hint">
+                +{{ (conta.Juros || 0) + (conta.Multa || 0) | currency:'BRL' }} (Multa/Juros)
+              </div>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="{
+                'status-pago': conta.Status === 'Pago',
+                'status-pendente': conta.Status === 'Pendente',
+                'status-atrasado': conta.Status === 'Atrasado'
+              }">
+                {{ conta.Status }}
+              </span>
+            </td>
+            <td>{{ conta.Forma_Pagamento || '-' }}</td>
+            <td>
+              <span *ngIf="conta.Numero_Parcela">
+                {{ conta.Numero_Parcela }}/{{ conta.Total_Parcelas }}
+              </span>
+              <span *ngIf="!conta.Numero_Parcela">-</span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button 
+                  *ngIf="conta.Status !== 'Pago'"
+                  class="btn-action btn-pay" 
+                  title="Dar Baixa (Receber)" 
+                  (click)="iniciarBaixa(conta)">
+                  Baixar
+                </button>
+                <button 
+                  class="btn-action btn-delete" 
+                  title="Excluir Lançamento" 
+                  (click)="excluir(conta.ID_ContaReceber)">
+                  Excluir
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="contasFiltradas.length === 0">
+            <td colspan="9" class="no-records">
+              Nenhuma conta a receber encontrada com os filtros selecionados.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ABA: CADASTRO -->
+  <div *ngIf="abaAtiva === 'cadastro'">
+    <h2>Novo Lançamento de Recebível</h2>
+    <p class="form-subtitle">Cadastre uma nova fatura, mensalidade ou taxa para um cliente/aluno.</p>
+
+    <div class="form-grid">
+      
+      <div class="form-group">
+        <label>Cliente (Aluno / Responsável) *</label>
+        <input
+          type="text"
+          placeholder="Nome completo do aluno ou responsável"
+          [(ngModel)]="novoCliente"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Descrição da Cobrança *</label>
+        <input
+          type="text"
+          placeholder="Ex: Mensalidade Escolar - Maio, Uniforme, Material"
+          [(ngModel)]="novaDescricao"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Valor Total (R$) *</label>
+        <input
+          type="number"
+          placeholder="0.00"
+          [(ngModel)]="novoValorTotal"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Data de Emissão</label>
+        <input
+          type="date"
+          [(ngModel)]="novaDataEmissao"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Data de Vencimento *</label>
+        <input
+          type="date"
+          [(ngModel)]="novaDataVencimento"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Status Inicial</label>
+        <select [(ngModel)]="novoStatus">
+          <option value="Pendente">Pendente</option>
+          <option value="Pago">Pago (Baixado)</option>
+          <option value="Atrasado">Atrasado</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Forma de Pagamento (Se Status for Pago)</label>
+        <select [disabled]="novoStatus !== 'Pago'" class="form-select">
+          <option value="PIX">PIX</option>
+          <option value="Boleto Bancário">Boleto Bancário</option>
+          <option value="Cartão de Crédito">Cartão de Crédito</option>
+          <option value="Cartão de Débito">Cartão de Débito</option>
+          <option value="Dinheiro">Dinheiro</option>
+        </select>
+      </div>
+
+      <div class="form-group row-split">
+        <div>
+          <label>Nº Parcela</label>
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="novoNumeroParcela"
+          />
+        </div>
+        <div>
+          <label>Total Parcelas</label>
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="novoTotalParcelas"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Juros por Atraso (R$)</label>
+        <input
+          type="number"
+          placeholder="0.00"
+          [(ngModel)]="novoJuros"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Multa por Atraso (R$)</label>
+        <input
+          type="number"
+          placeholder="0.00"
+          [(ngModel)]="novoMulta"
+        />
+      </div>
+
+    </div>
+
+    <div class="buttons">
+      <button (click)="cadastrar()" class="btn-primary">
+        Cadastrar Lançamento
+      </button>
+
+      <button (click)="cancelar()" class="btn-danger">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL DE BAIXA (RECEBIMENTO) -->
+  <div class="modal-overlay" *ngIf="contaSelecionadaParaBaixa">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Registrar Recebimento (Baixa)</h3>
+        <button class="btn-close-modal" (click)="cancelarBaixa()">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <p>Confirmando o recebimento da seguinte fatura:</p>
+        
+        <div class="invoice-summary-box">
+          <div class="summary-row">
+            <span class="summary-label">Cliente:</span>
+            <span class="summary-val font-semibold">{{ contaSelecionadaParaBaixa.ID_Cliente }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Cobrança:</span>
+            <span class="summary-val">{{ contaSelecionadaParaBaixa.Descricao }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Vencimento:</span>
+            <span class="summary-val">{{ contaSelecionadaParaBaixa.Data_Vencimento | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="summary-row highlight-row">
+            <span class="summary-label">Valor Original:</span>
+            <span class="summary-val">{{ contaSelecionadaParaBaixa.Valor_Total | currency:'BRL' }}</span>
+          </div>
+          <div class="summary-row" *ngIf="contaSelecionadaParaBaixa.Status === 'Atrasado'">
+            <span class="summary-label">Juros/Multa acumulados:</span>
+            <span class="summary-val text-red">
+              +{{ (contaSelecionadaParaBaixa.Juros || 0) + (contaSelecionadaParaBaixa.Multa || 0) | currency:'BRL' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="modal-form-grid">
+          <div class="modal-form-group">
+            <label>Data de Pagamento</label>
+            <input type="date" [(ngModel)]="baixaDataPagamento" />
+          </div>
+
+          <div class="modal-form-group">
+            <label>Valor Pago (R$)</label>
+            <input type="number" [(ngModel)]="baixaValorPago" placeholder="0.00" />
+          </div>
+
+          <div class="modal-form-group">
+            <label>Forma de Pagamento</label>
+            <select [(ngModel)]="baixaFormaPagamento">
+              <option value="PIX">PIX</option>
+              <option value="Boleto Bancário">Boleto Bancário</option>
+              <option value="Cartão de Crédito">Cartão de Crédito</option>
+              <option value="Cartão de Débito">Cartão de Débito</option>
+              <option value="Dinheiro">Dinheiro</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-modal-action btn-confirm-pay" (click)="confirmarBaixa()">
+          Confirmar Baixa
+        </button>
+        <button class="btn-modal-action btn-cancel-pay" (click)="cancelarBaixa()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

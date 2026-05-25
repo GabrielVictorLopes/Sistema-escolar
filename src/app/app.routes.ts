@@ -6,6 +6,7 @@ import { Professor } from './pages/professor/professor';
 import { Fornecedor } from './pages/fornecedor/fornecedor';
 import { Notas } from './pages/notas/notas';
 import { Faltas } from './pages/faltas/faltas';
+import { ContasReceber } from './pages/contas-receber/contas-receber';
 
 export const routes: Routes = [
   {
@@ -31,5 +32,9 @@ export const routes: Routes = [
   {
     path: 'faltas',
     component: Faltas
+  },
+  {
+    path: 'contas-receber',
+    component: ContasReceber
   }
 ];
