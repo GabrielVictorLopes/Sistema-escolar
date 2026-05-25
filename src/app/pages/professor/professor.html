@@ -8,6 +8,7 @@
       type="text"
       placeholder="Nome"
       [(ngModel)]="nome"
+      (keypress)="apenasLetras($event)"
     />
 
     <input
@@ -15,6 +16,7 @@
       placeholder="CPF"
       maxlength="11"
       [(ngModel)]="cpf"
+      (keypress)="apenasNumeros($event)"
     />
 
     <input
@@ -22,6 +24,7 @@
       placeholder="RG"
       maxlength="9"
       [(ngModel)]="rg"
+      (keypress)="apenasNumeros($event)"
     />
 
     <select [(ngModel)]="sexo">
@@ -34,6 +37,7 @@
       type="text"
       placeholder="Telefone"
       [(ngModel)]="telefone"
+      (keypress)="apenasNumeros($event)"
     />
 
     <input
@@ -77,6 +81,7 @@
       placeholder="CEP"
       maxlength="8"
       [(ngModel)]="cep"
+      (keypress)="apenasNumeros($event)"
     />
 
     <input

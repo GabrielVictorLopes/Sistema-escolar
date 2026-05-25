@@ -27,10 +27,60 @@ export class Professor {
   cep = '';
   complemento = '';
 
+  // Apenas números
+  apenasNumeros(event: KeyboardEvent) {
+    const tecla = event.key;
+
+    // teclas permitidas
+    const teclasPermitidas = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab'
+    ];
+
+    if (
+      !/[0-9]/.test(tecla) &&
+      !teclasPermitidas.includes(tecla)
+    ) {
+      event.preventDefault();
+    }
+  }
+
+  // Apenas letras
+  apenasLetras(event: KeyboardEvent) {
+    const tecla = event.key;
+
+    const teclasPermitidas = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab',
+      ' '
+    ];
+
+    if (
+      !/^[a-zA-ZÀ-ÿ\s]$/.test(tecla) &&
+      !teclasPermitidas.includes(tecla)
+    ) {
+      event.preventDefault();
+    }
+  }
+
+
   cadastrar() {
 
+    // validação cpf
     if (this.cpf.length !== 11) {
       alert('CPF inválido');
+      return;
+    }
+
+     // validação nome
+    if (!this.nome.trim()) {
+      alert('Informe o nome do aluno');
       return;
     }
 

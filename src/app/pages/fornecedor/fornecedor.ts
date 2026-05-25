@@ -25,7 +25,48 @@ export class Fornecedor {
   numero = '';
   cep = '';
   complemento = '';
+  
+ // Apenas números
+  apenasNumeros(event: KeyboardEvent) {
+    const tecla = event.key;
 
+    // teclas permitidas
+    const teclasPermitidas = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab'
+    ];
+
+    if (
+      !/[0-9]/.test(tecla) &&
+      !teclasPermitidas.includes(tecla)
+    ) {
+      event.preventDefault();
+    }
+  }
+
+  // Apenas letras
+  apenasLetras(event: KeyboardEvent) {
+    const tecla = event.key;
+
+    const teclasPermitidas = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab',
+      ' '
+    ];
+
+    if (
+      !/^[a-zA-ZÀ-ÿ\s]$/.test(tecla) &&
+      !teclasPermitidas.includes(tecla)
+    ) {
+      event.preventDefault();
+    }
+  }
   cadastrar() {
 
     if (this.cnpj.length !== 14) {

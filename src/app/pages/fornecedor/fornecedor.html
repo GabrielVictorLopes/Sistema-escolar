@@ -15,18 +15,21 @@
       placeholder="CNPJ"
       maxlength="14"
       [(ngModel)]="cnpj"
+      (keypress)="apenasNumeros($event)"
     />
 
     <input
       type="text"
       placeholder="Responsável"
       [(ngModel)]="responsavel"
+      (keypress)="apenasLetras($event)"
     />
 
     <input
       type="text"
       placeholder="Telefone"
       [(ngModel)]="telefone"
+      (keypress)="apenasNumeros($event)"
     />
 
     <input
@@ -69,6 +72,7 @@
       placeholder="CEP"
       maxlength="8"
       [(ngModel)]="cep"
+      (keypress)="apenasNumeros($event)"
     />
 
     <input

@@ -30,10 +30,71 @@ export class Aluno {
   cep = '';
   complemento = '';
 
+  // Apenas números
+  apenasNumeros(event: KeyboardEvent) {
+    const tecla = event.key;
+
+    // teclas permitidas
+    const teclasPermitidas = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab'
+    ];
+
+    if (
+      !/[0-9]/.test(tecla) &&
+      !teclasPermitidas.includes(tecla)
+    ) {
+      event.preventDefault();
+    }
+  }
+
+  // Apenas letras
+  apenasLetras(event: KeyboardEvent) {
+    const tecla = event.key;
+
+    const teclasPermitidas = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab',
+      ' '
+    ];
+
+    if (
+      !/^[a-zA-ZÀ-ÿ\s]$/.test(tecla) &&
+      !teclasPermitidas.includes(tecla)
+    ) {
+      event.preventDefault();
+    }
+  }
+
   cadastrar() {
 
+    // validação nome
+    if (!this.nome.trim()) {
+      alert('Informe o nome do aluno');
+      return;
+    }
+
+    // validação cpf
     if (this.cpf.length !== 11) {
       alert('CPF inválido');
+      return;
+    }
+
+    // validação telefone mãe
+    if (this.telMae && this.telMae.length < 10) {
+      alert('Telefone da mãe inválido');
+      return;
+    }
+
+    // validação telefone pai
+    if (this.telPai && this.telPai.length < 10) {
+      alert('Telefone do pai inválido');
       return;
     }
 

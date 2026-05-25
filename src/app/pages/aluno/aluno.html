@@ -4,92 +4,120 @@
 
   <div class="form-grid">
 
+    <!-- Nome -->
     <input
       type="text"
       placeholder="Nome"
       [(ngModel)]="nome"
+      (keypress)="apenasLetras($event)"
     />
 
+    <!-- CPF -->
     <input
       type="text"
       placeholder="CPF"
       maxlength="11"
       [(ngModel)]="cpf"
+      (keypress)="apenasNumeros($event)"
     />
 
+    <!-- RG -->
     <input
       type="text"
       placeholder="RG"
       maxlength="9"
       [(ngModel)]="rg"
+      (keypress)="apenasNumeros($event)"
     />
 
+    <!-- Sexo -->
     <select [(ngModel)]="sexo">
       <option value="">Sexo</option>
       <option value="F">Feminino</option>
       <option value="M">Masculino</option>
     </select>
 
+    <!-- Nome da mãe -->
     <input
       type="text"
       placeholder="Nome da mãe"
       [(ngModel)]="nomeMae"
+      (keypress)="apenasLetras($event)"
     />
 
+    <!-- Telefone da mãe -->
     <input
       type="text"
       placeholder="Telefone da mãe"
+      maxlength="11"
       [(ngModel)]="telMae"
+      (keypress)="apenasNumeros($event)"
     />
 
+    <!-- Nome do pai -->
     <input
       type="text"
       placeholder="Nome do pai"
       [(ngModel)]="nomePai"
+      (keypress)="apenasLetras($event)"
     />
 
+    <!-- Telefone do pai -->
     <input
       type="text"
       placeholder="Telefone do pai"
+      maxlength="11"
       [(ngModel)]="telPai"
+      (keypress)="apenasNumeros($event)"
     />
 
+    <!-- Medicamento -->
     <select [(ngModel)]="medicamento">
       <option value="">Medicamento?</option>
       <option value="sim">Sim</option>
       <option value="nao">Não</option>
     </select>
 
+    <!-- Observação -->
     <textarea
       placeholder="Observação"
-      [(ngModel)]="observacao">
-    </textarea>
+      [(ngModel)]="observacao"
+    ></textarea>
 
+    <!-- Rua -->
     <input
       type="text"
       placeholder="Rua"
       [(ngModel)]="rua"
+      (keypress)="apenasLetras($event)"
     />
 
+    <!-- Bairro -->
     <input
       type="text"
       placeholder="Bairro"
       [(ngModel)]="bairro"
+      (keypress)="apenasLetras($event)"
     />
 
+    <!-- Número -->
     <input
       type="text"
       placeholder="Número"
       [(ngModel)]="numero"
+      (keypress)="apenasNumeros($event)"
     />
 
+    <!-- CEP -->
     <input
       type="text"
       placeholder="CEP"
       maxlength="8"
       [(ngModel)]="cep"
+      (keypress)="apenasNumeros($event)"
     />
 
+    <!-- Complemento -->
     <input
       type="text"
       placeholder="Complemento"

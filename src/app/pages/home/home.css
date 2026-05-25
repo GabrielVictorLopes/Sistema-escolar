@@ -12,14 +12,13 @@
 }
 
 .logo {
-  width: 700px;
+  width: clamp(220px, 55vw, 700px);
   max-width: 100%;
   margin-bottom: 10px;
 }
 
 .cards {
   margin-top: 30px;
-
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 25px;
@@ -30,9 +29,7 @@
   background: #ffffff;
   border-radius: 20px;
   padding: 30px;
-
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-
   cursor: pointer;
   transition: 0.3s;
 }
