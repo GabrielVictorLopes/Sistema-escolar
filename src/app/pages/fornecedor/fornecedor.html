@@ -4,82 +4,107 @@
 
   <div class="form-grid">
 
-    <input
-      type="text"
-      placeholder="Nome da empresa"
-      [(ngModel)]="empresa"
-    />
+    <div class="form-group">
+      <label>Nome da Empresa</label>
+      <input
+        type="text"
+        [(ngModel)]="empresa"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="CNPJ"
-      maxlength="14"
-      [(ngModel)]="cnpj"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>CNPJ</label>
+      <input
+        type="text"
+        maxlength="14"
+        [(ngModel)]="cnpj"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Responsável"
-      [(ngModel)]="responsavel"
-      (keypress)="apenasLetras($event)"
-    />
+    <div class="form-group">
+      <label>Responsável</label>
+      <input
+        type="text"
+        [(ngModel)]="responsavel"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Telefone"
-      [(ngModel)]="telefone"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>Telefone</label>
+      <input
+        type="text"
+        [(ngModel)]="telefone"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="email"
-      placeholder="E-mail"
-      [(ngModel)]="email"
-    />
+    <div class="form-group">
+      <label>E-mail</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Produto/Serviço"
-      [(ngModel)]="produto"
-    />
+    <div class="form-group">
+      <label>Produto / Serviço</label>
+      <input
+        type="text"
+        [(ngModel)]="produto"
+      />
+    </div>
 
-    <textarea
-      placeholder="Observações"
-      [(ngModel)]="observacao">
-    </textarea>
+    <div class="form-group full-width">
+      <label>Observações</label>
+      <textarea
+        [(ngModel)]="observacao">
+      </textarea>
+    </div>
 
-    <input
-      type="text"
-      placeholder="Rua"
-      [(ngModel)]="rua"
-    />
+    <div class="form-group">
+      <label>Rua</label>
+      <input
+        type="text"
+        [(ngModel)]="rua"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Bairro"
-      [(ngModel)]="bairro"
-    />
+    <div class="form-group">
+      <label>Bairro</label>
+      <input
+        type="text"
+        [(ngModel)]="bairro"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Número"
-      [(ngModel)]="numero"
-    />
+    <div class="form-group">
+      <label>Número</label>
+      <input
+        type="text"
+        [(ngModel)]="numero"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="CEP"
-      maxlength="8"
-      [(ngModel)]="cep"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>CEP</label>
+      <input
+        type="text"
+        maxlength="8"
+        [(ngModel)]="cep"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Complemento"
-      [(ngModel)]="complemento"
-    />
+    <div class="form-group">
+      <label>Complemento</label>
+      <input
+        type="text"
+        [(ngModel)]="complemento"
+      />
+    </div>
 
   </div>
 

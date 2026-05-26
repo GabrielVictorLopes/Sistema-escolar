@@ -4,91 +4,120 @@
 
   <div class="form-grid">
 
-    <input
-      type="text"
-      placeholder="Nome"
-      [(ngModel)]="nome"
-      (keypress)="apenasLetras($event)"
-    />
+    <div class="form-group">
+      <label>Nome</label>
+      <input
+        type="text"
+        [(ngModel)]="nome"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="CPF"
-      maxlength="11"
-      [(ngModel)]="cpf"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>CPF</label>
+      <input
+        type="text"
+        maxlength="11"
+        [(ngModel)]="cpf"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="RG"
-      maxlength="9"
-      [(ngModel)]="rg"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>RG</label>
+      <input
+        type="text"
+        maxlength="9"
+        [(ngModel)]="rg"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <select [(ngModel)]="sexo">
-      <option value="">Sexo</option>
-      <option value="F">Feminino</option>
-      <option value="M">Masculino</option>
-    </select>
+    <div class="form-group">
+      <label>Sexo</label>
+      <select [(ngModel)]="sexo">
+        <option value="">Selecione</option>
+        <option value="F">Feminino</option>
+        <option value="M">Masculino</option>
+      </select>
+    </div>
 
-    <input
-      type="text"
-      placeholder="Telefone"
-      [(ngModel)]="telefone"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>Telefone</label>
+      <input
+        type="text"
+        [(ngModel)]="telefone"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="email"
-      placeholder="E-mail"
-      [(ngModel)]="email"
-    />
+    <div class="form-group">
+      <label>E-mail</label>
+      <input
+        type="email"
+        [(ngModel)]="email"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Disciplina"
-      [(ngModel)]="disciplina"
-    />
+    <div class="form-group">
+      <label>Disciplina</label>
+      <input
+        type="text"
+        [(ngModel)]="disciplina"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Formação"
-      [(ngModel)]="formacao"
-    />
+    <div class="form-group">
+      <label>Formação</label>
+      <input
+        type="text"
+        [(ngModel)]="formacao"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Rua"
-      [(ngModel)]="rua"
-    />
+    <div class="form-group">
+      <label>Rua</label>
+      <input
+        type="text"
+        [(ngModel)]="rua"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Bairro"
-      [(ngModel)]="bairro"
-    />
+    <div class="form-group">
+      <label>Bairro</label>
+      <input
+        type="text"
+        [(ngModel)]="bairro"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Número"
-      [(ngModel)]="numero"
-    />
+    <div class="form-group">
+      <label>Número</label>
+      <input
+        type="text"
+        [(ngModel)]="numero"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="CEP"
-      maxlength="8"
-      [(ngModel)]="cep"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>CEP</label>
+      <input
+        type="text"
+        maxlength="8"
+        [(ngModel)]="cep"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <input
-      type="text"
-      placeholder="Complemento"
-      [(ngModel)]="complemento"
-    />
+    <div class="form-group">
+      <label>Complemento</label>
+      <input
+        type="text"
+        [(ngModel)]="complemento"
+      />
+    </div>
 
   </div>
 

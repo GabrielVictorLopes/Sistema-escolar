@@ -1,51 +1,111 @@
 <div class="container">
 
-  <h1>Lançamento de Notas</h1>
-
-  <div class="form-grid">
-
-    <input
-      type="text"
-      placeholder="Nome do aluno"
-      [(ngModel)]="aluno"
-    />
-
-    <input
-      type="text"
-      placeholder="Disciplina"
-      [(ngModel)]="disciplina"
-    />
-
-    <select [(ngModel)]="bimestre">
-      <option value="">Bimestre</option>
-      <option value="1">1º Bimestre</option>
-      <option value="2">2º Bimestre</option>
-      <option value="3">3º Bimestre</option>
-      <option value="4">4º Bimestre</option>
-    </select>
-
-    <input
-      type="number"
-      placeholder="Nota"
-      [(ngModel)]="nota"
-    />
-
-    <textarea
-      placeholder="Observação"
-      [(ngModel)]="observacao">
-    </textarea>
-
+  <div class="header">
+    <h1>Lançamento de Notas</h1>
+    <p class="subtitle">
+      Cadastre e acompanhe o desempenho acadêmico do aluno
+    </p>
   </div>
 
-  <div class="buttons">
+  <div class="notas-layout">
 
-    <button (click)="salvar()">
-      Salvar Nota
-    </button>
+    <!-- FORM -->
+    <div class="form-card">
 
-    <button (click)="cancelar()">
-      Limpar
-    </button>
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label>Aluno</label>
+          <input
+            type="text"
+            [(ngModel)]="aluno"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Disciplina</label>
+          <input
+            type="text"
+            [(ngModel)]="disciplina"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Bimestre</label>
+          <select [(ngModel)]="bimestre">
+            <option value="">Selecione</option>
+            <option value="1">1º Bimestre</option>
+            <option value="2">2º Bimestre</option>
+            <option value="3">3º Bimestre</option>
+            <option value="4">4º Bimestre</option>
+          </select>
+        </div>
+
+        <div class="form-group nota-field">
+          <label>Nota</label>
+          <input
+            type="number"
+            min="0"
+            max="10"
+            step="0.1"
+            [(ngModel)]="nota"
+          />
+        </div>
+
+        <div class="form-group full-width">
+          <label>Observações</label>
+          <textarea
+            [(ngModel)]="observacao">
+          </textarea>
+        </div>
+
+      </div>
+
+      <div class="buttons">
+
+        <button class="btn-primary" (click)="salvar()">
+          Salvar Nota
+        </button>
+
+        <button class="btn-danger" (click)="cancelar()">
+          Limpar
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- CARD RESUMO -->
+    <div class="summary-card">
+
+      <h3>Resumo</h3>
+
+      <div class="summary-item">
+        <span>Aluno</span>
+        <strong>{{ aluno || '-' }}</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Disciplina</span>
+        <strong>{{ disciplina || '-' }}</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Bimestre</span>
+        <strong>
+          {{ bimestre ? bimestre + 'º' : '-' }}
+        </strong>
+      </div>
+
+      <div class="nota-preview">
+        <span>Nota</span>
+
+        <div class="nota-circle">
+          {{ nota || 0 }}
+        </div>
+      </div>
+
+    </div>
 
   </div>
 

@@ -4,125 +4,140 @@
 
   <div class="form-grid">
 
-    <!-- Nome -->
-    <input
-      type="text"
-      placeholder="Nome"
-      [(ngModel)]="nome"
-      (keypress)="apenasLetras($event)"
-    />
+    <div class="form-group">
+      <label>Nome do Aluno</label>
+      <input
+        type="text"
+        [(ngModel)]="nome"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <!-- CPF -->
-    <input
-      type="text"
-      placeholder="CPF"
-      maxlength="11"
-      [(ngModel)]="cpf"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>CPF</label>
+      <input
+        type="text"
+        [(ngModel)]="cpf"
+        maxlength="11"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <!-- RG -->
-    <input
-      type="text"
-      placeholder="RG"
-      maxlength="9"
-      [(ngModel)]="rg"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>RG</label>
+      <input
+        type="text"
+        [(ngModel)]="rg"
+        maxlength="9"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <!-- Sexo -->
-    <select [(ngModel)]="sexo">
-      <option value="">Sexo</option>
-      <option value="F">Feminino</option>
-      <option value="M">Masculino</option>
-    </select>
+    <div class="form-group">
+      <label>Sexo</label>
+      <select [(ngModel)]="sexo">
+        <option value="">Selecione</option>
+        <option value="F">Feminino</option>
+        <option value="M">Masculino</option>
+      </select>
+    </div>
 
-    <!-- Nome da mãe -->
-    <input
-      type="text"
-      placeholder="Nome da mãe"
-      [(ngModel)]="nomeMae"
-      (keypress)="apenasLetras($event)"
-    />
+    <div class="form-group">
+      <label>Nome da Mãe</label>
+      <input
+        type="text"
+        [(ngModel)]="nomeMae"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <!-- Telefone da mãe -->
-    <input
-      type="text"
-      placeholder="Telefone da mãe"
-      maxlength="11"
-      [(ngModel)]="telMae"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>Telefone da Mãe</label>
+      <input
+        type="text"
+        [(ngModel)]="telMae"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <!-- Nome do pai -->
-    <input
-      type="text"
-      placeholder="Nome do pai"
-      [(ngModel)]="nomePai"
-      (keypress)="apenasLetras($event)"
-    />
+    <div class="form-group">
+      <label>Nome do Pai</label>
+      <input
+        type="text"
+        [(ngModel)]="nomePai"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <!-- Telefone do pai -->
-    <input
-      type="text"
-      placeholder="Telefone do pai"
-      maxlength="11"
-      [(ngModel)]="telPai"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>Telefone do Pai</label>
+      <input
+        type="text"
+        [(ngModel)]="telPai"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <!-- Medicamento -->
-    <select [(ngModel)]="medicamento">
-      <option value="">Medicamento?</option>
-      <option value="sim">Sim</option>
-      <option value="nao">Não</option>
-    </select>
+    <div class="form-group">
+      <label>Medicamento?</label>
+      <select [(ngModel)]="medicamento">
+        <option value="">Selecione</option>
+        <option value="sim">Sim</option>
+        <option value="nao">Não</option>
+      </select>
+    </div>
 
-    <!-- Observação -->
-    <textarea
-      placeholder="Observação"
-      [(ngModel)]="observacao"
-    ></textarea>
+    <div class="form-group">
+      <label>Observação</label>
+      <textarea
+        [(ngModel)]="observacao">
+      </textarea>
+    </div>
 
-    <!-- Rua -->
-    <input
-      type="text"
-      placeholder="Rua"
-      [(ngModel)]="rua"
-      (keypress)="apenasLetras($event)"
-    />
+    <div class="form-group">
+      <label>Rua</label>
+      <input
+        type="text"
+        [(ngModel)]="rua"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <!-- Bairro -->
-    <input
-      type="text"
-      placeholder="Bairro"
-      [(ngModel)]="bairro"
-      (keypress)="apenasLetras($event)"
-    />
+    <div class="form-group">
+      <label>Bairro</label>
+      <input
+        type="text"
+        [(ngModel)]="bairro"
+        (keypress)="apenasLetras($event)"
+      />
+    </div>
 
-    <!-- Número -->
-    <input
-      type="text"
-      placeholder="Número"
-      [(ngModel)]="numero"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>Número</label>
+      <input
+        type="text"
+        [(ngModel)]="numero"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <!-- CEP -->
-    <input
-      type="text"
-      placeholder="CEP"
-      maxlength="8"
-      [(ngModel)]="cep"
-      (keypress)="apenasNumeros($event)"
-    />
+    <div class="form-group">
+      <label>CEP</label>
+      <input
+        type="text"
+        maxlength="8"
+        [(ngModel)]="cep"
+        (keypress)="apenasNumeros($event)"
+      />
+    </div>
 
-    <!-- Complemento -->
-    <input
-      type="text"
-      placeholder="Complemento"
-      [(ngModel)]="complemento"
-    />
+    <div class="form-group">
+      <label>Complemento</label>
+      <input
+        type="text"
+        [(ngModel)]="complemento"
+      />
+    </div>
 
   </div>
 

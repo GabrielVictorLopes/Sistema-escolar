@@ -1,0 +1,310 @@
+<div class="container">
+
+  <div class="header">
+    <div>
+      <h1>Nota Fiscal ERP</h1>
+      <p class="subtitle">
+        Emissão de Nota Fiscal de Serviço / Produto
+      </p>
+    </div>
+  </div>
+
+  <div class="erp-layout">
+
+    <!-- CONTEÚDO -->
+    <div class="content-area">
+
+      <!-- CLIENTE -->
+      <div class="section-card">
+        <h3>Dados do Cliente</h3>
+
+        <div class="form-grid">
+
+          <div class="form-group full-width">
+            <label>Razão Social / Nome *</label>
+            <input
+              type="text"
+              [(ngModel)]="cliente"
+              placeholder="Digite o nome do cliente"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>CPF / CNPJ *</label>
+            <input
+              type="text"
+              [(ngModel)]="cpfCnpj"
+              maxlength="18"
+              (keypress)="apenasNumeros($event)"
+              placeholder="Somente números"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Inscrição Estadual</label>
+            <input
+              type="text"
+              [(ngModel)]="inscricaoEstadual"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>E-mail</label>
+            <input
+              type="email"
+              [(ngModel)]="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Telefone</label>
+            <input
+              type="text"
+              [(ngModel)]="telefone"
+              (keypress)="apenasNumeros($event)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Cidade</label>
+            <input
+              type="text"
+              [(ngModel)]="cidade"
+              (keypress)="apenasLetras($event)"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>UF</label>
+            <input
+              type="text"
+              maxlength="2"
+              [(ngModel)]="uf"
+            />
+          </div>
+
+        </div>
+      </div>
+
+      <!-- NOTA -->
+      <div class="section-card">
+        <h3>Dados da Nota Fiscal</h3>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>Nº Nota</label>
+            <input
+              type="text"
+              [(ngModel)]="numeroNota"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Nº RPS</label>
+            <input
+              type="text"
+              [(ngModel)]="numeroRps"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Série</label>
+            <input
+              type="text"
+              [(ngModel)]="serieRps"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Tipo</label>
+            <select [(ngModel)]="tipoRps">
+              <option value="NFS-e">NFS-e</option>
+              <option value="NF-e">NF-e</option>
+              <option value="NFC-e">NFC-e</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Data Emissão</label>
+            <input
+              type="date"
+              [(ngModel)]="dataEmissao"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Competência</label>
+            <input
+              type="date"
+              [(ngModel)]="dataCompetencia"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select [(ngModel)]="status">
+              <option>Rascunho</option>
+              <option>Emitida</option>
+              <option>Cancelada</option>
+              <option>Pendente</option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SERVIÇO -->
+      <div class="section-card">
+        <h3>Serviço / Produto</h3>
+
+        <div class="form-grid">
+
+          <div class="form-group full-width">
+            <label>Descrição do Serviço *</label>
+            <textarea
+              [(ngModel)]="descricaoServico"
+              placeholder="Descreva o serviço/produto"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Quantidade</label>
+            <input
+              type="number"
+              [(ngModel)]="quantidade"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Valor Unitário</label>
+            <input
+              type="number"
+              [(ngModel)]="valorUnitario"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>Desconto</label>
+            <input
+              type="number"
+              [(ngModel)]="desconto"
+            />
+          </div>
+
+          <div class="form-group full-width">
+            <label>Observações</label>
+            <textarea
+              [(ngModel)]="observacao"
+            ></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- IMPOSTOS -->
+      <div class="section-card">
+        <h3>Impostos e Retenções</h3>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label>ISS</label>
+            <input type="number" [(ngModel)]="iss">
+          </div>
+
+          <div class="form-group">
+            <label>PIS</label>
+            <input type="number" [(ngModel)]="pis">
+          </div>
+
+          <div class="form-group">
+            <label>COFINS</label>
+            <input type="number" [(ngModel)]="cofins">
+          </div>
+
+          <div class="form-group">
+            <label>IRPJ</label>
+            <input type="number" [(ngModel)]="irpj">
+          </div>
+
+          <div class="form-group">
+            <label>CSLL</label>
+            <input type="number" [(ngModel)]="csll">
+          </div>
+
+          <div class="form-group">
+            <label>Deduções</label>
+            <input type="number" [(ngModel)]="deducoes">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- BOTÕES -->
+      <div class="buttons">
+
+        <button
+          class="btn-primary"
+          (click)="salvarRascunho()">
+
+          Salvar Rascunho
+        </button>
+
+        <button
+          class="btn-success"
+          (click)="emitirNota()">
+
+          Emitir Nota
+        </button>
+
+        <button
+          class="btn-danger"
+          (click)="cancelar()">
+
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- RESUMO ERP -->
+    <div class="summary-card">
+
+      <h3>Resumo Financeiro</h3>
+
+      <div class="summary-row">
+        <span>Valor Bruto</span>
+        <strong>
+          {{ valorBruto | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Desconto</span>
+        <strong>
+          {{ desconto | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </strong>
+      </div>
+
+      <div class="summary-row">
+        <span>Impostos</span>
+        <strong>
+          {{ totalImpostos | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </strong>
+      </div>
+
+      <div class="summary-total">
+        <span>Total da Nota</span>
+
+        <strong>
+          {{ valorLiquido | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
