@@ -7,7 +7,9 @@ import { Fornecedor } from './pages/fornecedor/fornecedor';
 import { Notas } from './pages/notas/notas';
 import { Faltas } from './pages/faltas/faltas';
 import { ContasReceber } from './pages/contas-receber/contas-receber';
+import { ContasPagar } from './pages/contas-pagar/contas-pagar';
 import { NotaFiscal } from './pages/nota-fiscal/nota-fiscal';
+
 
 export const routes: Routes = [
   {
@@ -37,6 +39,10 @@ export const routes: Routes = [
   {
     path: 'contas-receber',
     component: ContasReceber
+  },
+  {
+    path: 'contas-pagar',
+    component: ContasPagar
   },
   {
   path: 'nota-fiscal',

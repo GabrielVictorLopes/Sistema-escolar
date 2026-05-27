@@ -30,9 +30,6 @@
           <span class="metric-label">Total Recebido</span>
           <span class="metric-value">{{ totalRecebido | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
-        <div class="metric-icon">
-          <span class="material-icons">check_circle</span>
-        </div>
       </div>
 
       <div class="metric-card card-pendente">
@@ -40,9 +37,7 @@
           <span class="metric-label">Total Pendente</span>
           <span class="metric-value">{{ totalPendente | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
-        <div class="metric-icon">
-          <span class="material-icons">hourglass_empty</span>
-        </div>
+        
       </div>
 
       <div class="metric-card card-atrasado">
@@ -50,31 +45,30 @@
           <span class="metric-label">Total em Atraso</span>
           <span class="metric-value">{{ totalAtrasado | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
-        <div class="metric-icon">
-          <span class="material-icons">warning</span>
-        </div>
       </div>
     </div>
 
     <!-- Barra de Filtros -->
     <div class="filters-bar">
-      <div class="filter-input-group search-group">
-        <input 
-          type="text" 
-          placeholder="Buscar por cliente ou descrição..." 
-          [(ngModel)]="buscaCliente" 
-          class="filter-input"
-        />
-      </div>
-      <div class="filter-input-group select-group">
-        <select [(ngModel)]="filtroStatus" class="filter-select">
-          <option value="">Todos os Status</option>
-          <option value="Pago">Pago</option>
-          <option value="Pendente">Pendente</option>
-          <option value="Atrasado">Atrasado</option>
-        </select>
-      </div>
-    </div>
+
+  <input
+    type="text"
+    placeholder="Buscar por cliente ou descrição..."
+    [(ngModel)]="buscaCliente"
+    class="filter-input"
+  />
+
+  <select
+    [(ngModel)]="filtroStatus"
+    class="filter-select"
+  >
+    <option value="">Todos os Status</option>
+    <option value="Pago">Pago</option>
+    <option value="Pendente">Pendente</option>
+    <option value="Atrasado">Atrasado</option>
+  </select>
+
+</div>
 
     <!-- Tabela de Contas -->
     <div class="table-container">
@@ -152,7 +146,6 @@
   <!-- ABA: CADASTRO -->
   <div *ngIf="abaAtiva === 'cadastro'">
     <h2>Novo Lançamento de Recebível</h2>
-    <p class="form-subtitle">Cadastre uma nova fatura, mensalidade ou taxa para um cliente/aluno.</p>
 
     <div class="form-grid">
       
