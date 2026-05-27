@@ -1,48 +1,152 @@
 <div class="container">
 
-  <h1>Lançamento de Faltas</h1>
+  <div class="header">
+    <h1>Lançamento de Faltas</h1>
+    <p class="subtitle">
+      Controle de faltas e justificativas dos alunos
+    </p>
+  </div>
 
-  <div class="form-grid">
+  <div class="faltas-layout">
 
-    <input
-      type="text"
-      placeholder="Nome do aluno"
-      [(ngModel)]="aluno"
-    />
+    <!-- FORM -->
+    <div class="form-card">
 
-    <input
-      type="text"
-      placeholder="Disciplina"
-      [(ngModel)]="disciplina"
-    />
+      <div class="form-grid">
 
-    <input
-      type="date"
-      [(ngModel)]="data"
-    />
+        <div class="form-group">
+          <label>Aluno</label>
+          <input
+            type="text"
+            [(ngModel)]="aluno"
+            placeholder="Nome do aluno"
+          />
+        </div>
 
-    <input
-      type="number"
-      placeholder="Quantidade de faltas"
-      [(ngModel)]="quantidade"
-    />
+        <div class="form-group">
+          <label>Disciplina</label>
 
-    <textarea
-      placeholder="Justificativa"
-      [(ngModel)]="justificativa">
-    </textarea>
+          <select [(ngModel)]="disciplina">
+            <option value="">Selecione</option>
+            <option>Matemática</option>
+            <option>Português</option>
+            <option>História</option>
+            <option>Geografia</option>
+            <option>Ciências</option>
+            <option>Física</option>
+            <option>Química</option>
+            <option>Biologia</option>
+            <option>Inglês</option>
+            <option>Educação Física</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Data da Falta</label>
+          <input
+            type="date"
+            [(ngModel)]="data"
+            placeholder="dd/mm/aaaa"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Quantidade</label>
+          <input
+            type="number"
+            min="1"
+            [(ngModel)]="quantidade"
+            placeholder="Número de faltas"
+          />
+        </div>
+
+        <div class="form-group full-width">
+          <label>Justificativa</label>
+
+          <textarea
+            [(ngModel)]="justificativa"
+          >
+          </textarea>
+        </div>
+
+      </div>
+
+      <div class="buttons">
+        <button class="btn-primary" (click)="salvar()">
+          Salvar Falta
+        </button>
+
+        <button class="btn-danger" (click)="cancelar()">
+          Limpar
+        </button>
+      </div>
+    </div>
+
+    <!-- RESUMO -->
+    <div class="summary-card">
+
+      <h3>Resumo</h3>
+
+      <div class="summary-item">
+        <span>Aluno</span>
+        <strong>{{ aluno || '-' }}</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Disciplina</span>
+        <strong>{{ disciplina || '-' }}</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Data</span>
+        <strong>{{ data || '-' }}</strong>
+      </div>
+
+      <div class="summary-item">
+        <span>Qtd. Faltas</span>
+        <strong>{{ quantidade || 0 }}</strong>
+      </div>
+
+      <div class="status-box">
+        {{ getStatus(justificativa) }}
+      </div>
+
+    </div>
 
   </div>
 
-  <div class="buttons">
+  <!-- TABELA -->
+  <div class="table-card">
 
-    <button (click)="salvar()">
-      Salvar Falta
-    </button>
+    <h2>Faltas Lançadas</h2>
 
-    <button (click)="cancelar()">
-      Limpar
-    </button>
+    <table>
+
+      <thead>
+        <tr>
+          <th>Aluno</th>
+          <th>Disciplina</th>
+          <th>Data</th>
+          <th>Qtd</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let item of faltas">
+
+          <td>{{ item.aluno }}</td>
+          <td>{{ item.disciplina }}</td>
+          <td>{{ item.data }}</td>
+          <td>{{ item.quantidade }}</td>
+          <td>{{ getStatus(item.justificativa) }}</td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
 
   </div>
 

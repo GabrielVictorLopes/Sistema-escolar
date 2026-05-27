@@ -45,6 +45,7 @@
             <input
               type="text"
               [(ngModel)]="inscricaoEstadual"
+              placeholder="Número da inscrição estadual"
             />
           </div>
 
@@ -53,6 +54,7 @@
             <input
               type="email"
               [(ngModel)]="email"
+              placeholder="Insira o e-mail do cliente"
             />
           </div>
 
@@ -62,6 +64,7 @@
               type="text"
               [(ngModel)]="telefone"
               (keypress)="apenasNumeros($event)"
+              placeholder="insira o telefone do cliente"
             />
           </div>
 
@@ -71,6 +74,7 @@
               type="text"
               [(ngModel)]="cidade"
               (keypress)="apenasLetras($event)"
+              placeholder="Insira a cidade do cliente"
             />
           </div>
 
@@ -80,6 +84,7 @@
               type="text"
               maxlength="2"
               [(ngModel)]="uf"
+              placeholder="Insira a UF do cliente"
             />
           </div>
 
@@ -97,6 +102,7 @@
             <input
               type="text"
               [(ngModel)]="numeroNota"
+              placeholder="Número da nota fiscal"
             />
           </div>
 
@@ -105,6 +111,7 @@
             <input
               type="text"
               [(ngModel)]="numeroRps"
+              placeholder="Número do RPS"
             />
           </div>
 
@@ -113,6 +120,7 @@
             <input
               type="text"
               [(ngModel)]="serieRps"
+              placeholder="Série do RPS"
             />
           </div>
 
@@ -130,6 +138,7 @@
             <input
               type="date"
               [(ngModel)]="dataEmissao"
+              placeholder="Selecione a data de emissão"
             />
           </div>
 
@@ -138,6 +147,7 @@
             <input
               type="date"
               [(ngModel)]="dataCompetencia"
+              placeholder="Selecione a data de competência"
             />
           </div>
 
@@ -173,6 +183,7 @@
             <input
               type="number"
               [(ngModel)]="quantidade"
+              placeholder="Insira a quantidade"
             />
           </div>
 
@@ -181,6 +192,7 @@
             <input
               type="number"
               [(ngModel)]="valorUnitario"
+              placeholder="Insira o valor unitário"
             />
           </div>
 
@@ -189,6 +201,7 @@
             <input
               type="number"
               [(ngModel)]="desconto"
+              placeholder="Insira o desconto"
             />
           </div>
 

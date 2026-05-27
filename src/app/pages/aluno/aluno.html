@@ -10,6 +10,7 @@
         type="text"
         [(ngModel)]="nome"
         (keypress)="apenasLetras($event)"
+        placeholder="Insira o nome completo do aluno"
       />
     </div>
 
@@ -20,6 +21,7 @@
         [(ngModel)]="cpf"
         maxlength="11"
         (keypress)="apenasNumeros($event)"
+        placeholder="Insira seu CPF sem pontos ou traços"
       />
     </div>
 
@@ -30,6 +32,7 @@
         [(ngModel)]="rg"
         maxlength="9"
         (keypress)="apenasNumeros($event)"
+        placeholder="Insira seu RG sem pontos ou traços"
       />
     </div>
 
@@ -48,6 +51,7 @@
         type="text"
         [(ngModel)]="nomeMae"
         (keypress)="apenasLetras($event)"
+        placeholder="Insira o nome completo da mãe"
       />
     </div>
 
@@ -57,6 +61,7 @@
         type="text"
         [(ngModel)]="telMae"
         (keypress)="apenasNumeros($event)"
+        placeholder="Insira o telefone da mãe"
       />
     </div>
 
@@ -66,6 +71,7 @@
         type="text"
         [(ngModel)]="nomePai"
         (keypress)="apenasLetras($event)"
+        placeholder="Insira o nome completo do pai"
       />
     </div>
 
@@ -75,6 +81,7 @@
         type="text"
         [(ngModel)]="telPai"
         (keypress)="apenasNumeros($event)"
+        placeholder="Insira o telefone do pai"
       />
     </div>
 
@@ -100,6 +107,7 @@
         type="text"
         [(ngModel)]="rua"
         (keypress)="apenasLetras($event)"
+        placeholder="Insira a rua onde o aluno reside"
       />
     </div>
 
@@ -109,6 +117,7 @@
         type="text"
         [(ngModel)]="bairro"
         (keypress)="apenasLetras($event)"
+        placeholder="Insira o bairro onde o aluno reside"
       />
     </div>
 
@@ -118,6 +127,7 @@
         type="text"
         [(ngModel)]="numero"
         (keypress)="apenasNumeros($event)"
+        placeholder="Insira o número da residência do aluno"
       />
     </div>
 
@@ -128,6 +138,7 @@
         maxlength="8"
         [(ngModel)]="cep"
         (keypress)="apenasNumeros($event)"
+        placeholder="Insira o CEP da residência do aluno"
       />
     </div>
 
@@ -136,6 +147,7 @@
       <input
         type="text"
         [(ngModel)]="complemento"
+        placeholder="Insira um complemento para o endereço, se necessário"
       />
     </div>
 

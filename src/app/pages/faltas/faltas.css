@@ -1,51 +1,159 @@
-.container{
-  background:white;
-  padding:30px;
-  border-radius:20px;
+.container {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
 }
 
-h1{
-  margin-bottom:20px;
+.header h1 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 32px;
 }
 
-.form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
+.subtitle {
+  color: #64748b;
+  margin-bottom: 25px;
+}
+
+.faltas-layout {
+  display: grid;
+  grid-template-columns: 2fr 320px;
+  gap: 20px;
+}
+
+.form-card,
+.summary-card,
+.table-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  padding: 22px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #334155;
 }
 
 input,
 select,
-textarea{
-  padding:14px;
-  border:1px solid #ccc;
-  border-radius:10px;
-  font-size:16px;
+textarea {
+  padding: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 15px;
 }
 
-textarea{
-  min-height:120px;
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #1976d2;
 }
 
-.buttons{
-  margin-top:20px;
-  display:flex;
-  gap:10px;
+textarea {
+  min-height: 100px;
+  resize: none;
 }
 
-button{
-  border:none;
-  padding:14px 24px;
-  border-radius:10px;
-  cursor:pointer;
+.buttons {
+  margin-top: 22px;
+  display: flex;
+  gap: 10px;
 }
 
-button:first-child{
-  background:#1976d2;
-  color:white;
+button {
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
 }
 
-button:last-child{
-  background:#e53935;
-  color:white;
+.btn-primary {
+  background: #1976d2;
+  color: white;
+}
+
+.btn-danger {
+  background: #e53935;
+  color: white;
+}
+
+.summary-card h3 {
+  margin-top: 0;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.status-box {
+  background: #eff6ff;
+  color: #1976d2;
+  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.table-card {
+  margin-top: 25px;
+}
+
+.table-card h2 {
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #1976d2;
+  color: white;
+  padding: 14px;
+  text-align: left;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+  background: #f8fafc;
+}
+
+@media (max-width: 1100px) {
+  .faltas-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
 }

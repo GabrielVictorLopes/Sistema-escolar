@@ -43,7 +43,7 @@ h1 {
   background: #fff;
   border-radius: 10px;
   padding: 5px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #ffffff;
 }
 
 .section-card h3 {
@@ -92,7 +92,7 @@ input:focus,
 select:focus,
 textarea:focus {
   border-color: #1976d2;
-  box-shadow: 0 0 0 2px rgba(25, 118, 210, .15);
+  box-shadow: 0 0 0 2px rgb(255, 255, 255);
 }
 
 textarea {
@@ -214,4 +214,5 @@ button:hover {
   button {
     width: 100%;
   }
+  
 }

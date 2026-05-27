@@ -1,23 +1,20 @@
 .container {
   background: white;
-  padding: 25px;
+  padding: 24px;
   border-radius: 20px;
 }
 
 /* HEADER */
 
-.header {
-  margin-bottom: 20px;
-}
-
-h1 {
+.header h1 {
   margin: 0;
   color: #1e293b;
+  font-size: 32px;
 }
 
 .subtitle {
-  margin-top: 5px;
   color: #64748b;
+  margin-bottom: 25px;
 }
 
 /* LAYOUT */
@@ -28,17 +25,18 @@ h1 {
   gap: 20px;
 }
 
-/* CARD */
+/* CARDS */
 
 .form-card,
-.summary-card {
+.summary-card,
+.table-card {
   background: #fff;
+  border: 1px solid #e5e7eb;
   border-radius: 20px;
   padding: 22px;
-  border: 1px solid #e5e7eb;
 }
 
-/* GRID */
+/* GRID FORM */
 
 .form-grid {
   display: grid;
@@ -51,17 +49,16 @@ h1 {
   flex-direction: column;
 }
 
-.form-group.full-width {
+.full-width {
   grid-column: span 2;
 }
 
 /* LABEL */
 
 label {
-  margin-bottom: 8px;
   font-weight: 600;
+  margin-bottom: 8px;
   color: #334155;
-  font-size: 14px;
 }
 
 /* INPUTS */
@@ -74,35 +71,27 @@ textarea {
   border: 1px solid #d1d5db;
   border-radius: 12px;
   font-size: 15px;
-  outline: none;
-  transition: .2s;
+  transition: 0.2s;
+  background: white;
   box-sizing: border-box;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
+  outline: none;
   border-color: #1976d2;
-  box-shadow: 0 0 0 3px rgba(25,118,210,.12);
 }
 
 textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-/* NOTA */
-
-.nota-field input {
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
+  min-height: 100px;
+  resize: none;
 }
 
 /* BOTÕES */
 
 .buttons {
-  margin-top: 25px;
+  margin-top: 22px;
   display: flex;
   gap: 12px;
 }
@@ -113,7 +102,7 @@ button {
   border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 button:hover {
@@ -126,7 +115,7 @@ button:hover {
 }
 
 .btn-danger {
-  background: #ef4444;
+  background: #e53935;
   color: white;
 }
 
@@ -134,45 +123,101 @@ button:hover {
 
 .summary-card h3 {
   margin-top: 0;
-  margin-bottom: 20px;
-  color: #1976d2;
+  color: #1e293b;
 }
 
 .summary-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
+  color: #475569;
 }
 
-.nota-preview {
-  margin-top: 30px;
+.summary-item strong {
+  color: #111827;
+}
+
+.media-box {
+  margin-top: 25px;
+  background: #eff6ff;
+  border-radius: 14px;
+  padding: 18px;
   text-align: center;
 }
 
-.nota-preview span {
+.media-box span {
   display: block;
-  margin-bottom: 10px;
   color: #64748b;
+  margin-bottom: 8px;
 }
 
-.nota-circle {
-  width: 90px;
-  height: 90px;
-  margin: auto;
-  border-radius: 50%;
+.media-box strong {
+  font-size: 28px;
+  color: #1976d2;
+}
+
+/* TABELA */
+
+.table-card {
+  margin-top: 25px;
+}
+
+.table-card h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
   background: #1976d2;
   color: white;
-  font-size: 30px;
+  padding: 14px;
+  text-align: left;
+  font-weight: 600;
+}
+
+th:first-child {
+  border-top-left-radius: 12px;
+}
+
+th:last-child {
+  border-top-right-radius: 12px;
+}
+
+td {
+  padding: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+  background: #f8fafc;
+}
+
+/* STATUS DAS NOTAS */
+
+.nota-baixa {
+  color: #dc2626;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.nota-media {
+  color: #f59e0b;
+  font-weight: bold;
+}
+
+.nota-alta {
+  color: #16a34a;
+  font-weight: bold;
 }
 
 /* RESPONSIVO */
 
-@media (max-width: 900px) {
-
+@media (max-width: 1100px) {
   .notas-layout {
     grid-template-columns: 1fr;
   }
@@ -181,15 +226,31 @@ button:hover {
     grid-template-columns: 1fr;
   }
 
-  .form-group.full-width {
+  .full-width {
     grid-column: span 1;
   }
+}
 
-  .buttons {
-    flex-direction: column;
+@media (max-width: 768px) {
+  .container {
+    padding: 18px;
+  }
+
+  .header h1 {
+    font-size: 26px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    font-size: 14px;
   }
 
   button {
     width: 100%;
+  }
+
+  .buttons {
+    flex-direction: column;
   }
 }
