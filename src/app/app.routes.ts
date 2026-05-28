@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { Home } from './pages/home/home';
 import { Aluno } from './pages/aluno/aluno';
 import { Professor } from './pages/professor/professor';
@@ -47,5 +46,9 @@ export const routes: Routes = [
   {
   path: 'nota-fiscal',
   component: NotaFiscal
-}
+},
+{
+    path: 'home',
+    component: Home 
+  },
 ];

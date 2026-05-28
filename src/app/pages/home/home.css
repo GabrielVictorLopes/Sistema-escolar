@@ -5,49 +5,11 @@
 
 .hero {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin-top: 20px;
+  align-items: center;  
+  justify-content: center;
 }
 
 .logo {
-  width: clamp(220px, 55vw, 700px);
+  width: clamp(500px, 900px);
   max-width: 100%;
-  margin-bottom: 10px;
-}
-
-.cards {
-  margin-top: 30px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
-  font-weight: bold;
-}
-
-.card {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-}
-
-.icon {
-  font-size: 48px;
-  color: #1976d2;
-}
-
-.card h3 {
-  margin-top: 15px;
-  color: #1e293b;
-}
-
-.card p {
-  color: #64748b;
 }
