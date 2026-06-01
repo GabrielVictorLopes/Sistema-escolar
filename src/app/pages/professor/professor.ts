@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-professor',
@@ -9,6 +10,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './professor.css',
 })
 export class Professor {
+  constructor(private http: HttpClient) {}
 
   nome = '';
   cpf = '';
@@ -70,22 +72,49 @@ export class Professor {
   }
 
 
-  cadastrar() {
+cadastrar() {
 
-    // validação cpf
-    if (this.cpf.length !== 11) {
-      alert('CPF inválido');
-      return;
-    }
-
-     // validação nome
-    if (!this.nome.trim()) {
-      alert('Informe o nome do aluno');
-      return;
-    }
-
-    alert('Professor cadastrado com sucesso!');
+  if (this.cpf.length !== 11) {
+    alert('CPF inválido');
+    return;
   }
+
+  if (!this.nome.trim()) {
+    alert('Informe o nome do professor');
+    return;
+  }
+
+  const dados = {
+    nome: this.nome,
+    cpf: this.cpf,
+    rg: this.rg,
+    sexo: this.sexo,
+    telefone: this.telefone,
+    email: this.email,
+    disciplina: this.disciplina,
+    formacao: this.formacao,
+    rua: this.rua,
+    bairro: this.bairro,
+    numero: this.numero,
+    cep: this.cep,
+    complemento: this.complemento
+  };
+
+  this.http.post(
+    'https://sistema-escolar-api-production.up.railway.app/professor',
+    dados
+  ).subscribe({
+    next: () => {
+      alert('Professor cadastrado com sucesso!');
+      this.cancelar();
+    },
+    error: (erro) => {
+      console.error(erro);
+      alert('Erro ao cadastrar professor');
+    }
+  });
+}
+
 
   cancelar() {
     this.nome = '';
