@@ -1,37 +1,87 @@
 <div class="layout">
 
-  <aside class="sidebar">
-    
+  <!-- BOTÃO MENU -->
+  <button
+    class="menu-toggle"
+    (click)="menuAberto = !menuAberto">
+
+    ☰
+
+  </button>
+
+  <!-- OVERLAY -->
+  <div
+    class="overlay"
+    *ngIf="menuAberto"
+    (click)="menuAberto = false">
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside
+    class="sidebar"
+    [class.open]="menuAberto">
+
     <div class="sidebar-brand">
-      <a routerLink="/home" class="sidebar-home-link" aria-label="Ir para a página inicial">
-        <img src="/logo_2.png" alt="Logo SOCE" class="sidebar-logo" />
+      <a
+        routerLink="/home"
+        class="sidebar-home-link"
+        aria-label="Ir para a página inicial">
+
+        <img
+          src="/logo_2.png"
+          alt="Logo SOCE"
+          class="sidebar-logo" />
+
       </a>
     </div>
+
     <div class="menu-group">
       <h3>Cadastros</h3>
 
-      <a routerLink="/aluno">Cadastro de Aluno</a>
-      <a routerLink="/professor">Cadastro de Professor</a>
-      <a routerLink="/fornecedor">Cadastro de Fornecedor</a>
+      <a routerLink="/aluno" (click)="menuAberto = false">
+        Cadastro de Aluno
+      </a>
+
+      <a routerLink="/professor" (click)="menuAberto = false">
+        Cadastro de Professor
+      </a>
+
+      <a routerLink="/fornecedor" (click)="menuAberto = false">
+        Cadastro de Fornecedor
+      </a>
     </div>
 
     <div class="menu-group">
       <h3>Notas / Faltas</h3>
 
-      <a routerLink="/notas">Lançar Notas</a>
-      <a routerLink="/faltas">Lançar Faltas</a>
+      <a routerLink="/notas" (click)="menuAberto = false">
+        Lançar Notas
+      </a>
+
+      <a routerLink="/faltas" (click)="menuAberto = false">
+        Lançar Faltas
+      </a>
     </div>
 
     <div class="menu-group">
       <h3>Financeiro</h3>
-      
-      <a routerLink="/contas-receber">Contas a Receber</a>
-      <a routerLink="/contas-pagar">Contas a Pagar</a>
-      <a routerLink="/nota-fiscal"> Nota Fiscal</a>
-      
+
+      <a routerLink="/contas-receber" (click)="menuAberto = false">
+        Contas a Receber
+      </a>
+
+      <a routerLink="/contas-pagar" (click)="menuAberto = false">
+        Contas a Pagar
+      </a>
+
+      <a routerLink="/nota-fiscal" (click)="menuAberto = false">
+        Nota Fiscal
+      </a>
     </div>
+
   </aside>
 
+  <!-- CONTEÚDO -->
   <main class="content">
     <router-outlet></router-outlet>
   </main>
