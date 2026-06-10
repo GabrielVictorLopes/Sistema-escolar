@@ -46,7 +46,8 @@
               type="text"
               [(ngModel)]="inscricaoEstadual"
               placeholder="Número da inscrição estadual"
-            />
+              (keypress)="apenasNumeros($event)"
+            />  
           </div>
 
           <div class="form-group">
@@ -85,6 +86,7 @@
               maxlength="2"
               [(ngModel)]="uf"
               placeholder="Insira a UF do cliente"
+               (keypress)="apenasLetras($event)"
             />
           </div>
 
@@ -103,6 +105,7 @@
               type="text"
               [(ngModel)]="numeroNota"
               placeholder="Número da nota fiscal"
+              (keypress)="apenasNumeros($event)"
             />
           </div>
 
@@ -112,6 +115,7 @@
               type="text"
               [(ngModel)]="numeroRps"
               placeholder="Número do RPS"
+              (keypress)="apenasNumeros($event)"
             />
           </div>
 
@@ -121,6 +125,7 @@
               type="text"
               [(ngModel)]="serieRps"
               placeholder="Série do RPS"
+              (keypress)="apenasLetras($event)"
             />
           </div>
 
@@ -175,6 +180,7 @@
             <textarea
               [(ngModel)]="descricaoServico"
               placeholder="Descreva o serviço/produto"
+              (keypress)="apenasLetras($event)"
             ></textarea>
           </div>
 
@@ -184,6 +190,7 @@
               type="number"
               [(ngModel)]="quantidade"
               placeholder="Insira a quantidade"
+              (keypress)="apenasNumeros($event)"
             />
           </div>
 
@@ -193,6 +200,7 @@
               type="number"
               [(ngModel)]="valorUnitario"
               placeholder="Insira o valor unitário"
+              (keypress)="apenasNumeros($event)"
             />
           </div>
 
@@ -202,6 +210,7 @@
               type="number"
               [(ngModel)]="desconto"
               placeholder="Insira o desconto"
+              (keypress)="apenasNumeros($event)"
             />
           </div>
 
@@ -223,7 +232,7 @@
 
           <div class="form-group">
             <label>ISS</label>
-            <input type="number" [(ngModel)]="iss">
+            <input type="number" [(ngModel)]="iss">   
           </div>
 
           <div class="form-group">
