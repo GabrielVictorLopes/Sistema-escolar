@@ -1,3 +1,0 @@
-cd Sistema-escolar
-npm install -g @angular/cli
-npm install
