@@ -38,6 +38,7 @@ export class ContasPagar implements OnInit {
 
   contas: ContaPagar[] = [];
   categorias: any[] = [];
+  fornecedores: any[] = [];
 
   contaSelecionada: ContaPagar | null = null;
 
@@ -63,6 +64,7 @@ export class ContasPagar implements OnInit {
 
   ngOnInit(): void {
      this.carregarCategorias();
+     this.carregarFornecedores();
 
     this.contas = [
       {
@@ -149,6 +151,30 @@ export class ContasPagar implements OnInit {
     });
 
   }
+
+  carregarFornecedores() {
+
+  this.http.get<any[]>(
+    'https://sistema-escolar-api-production.up.railway.app/fornecedor'
+  ).subscribe({
+
+    next: (dados) => {
+
+      this.fornecedores = dados;
+
+      if (dados.length > 0 && !this.novoFornecedor) {
+        this.novoFornecedor = dados[0].empresa;
+      }
+
+    },
+
+    error: (erro) => {
+      console.error('Erro ao carregar fornecedores', erro);
+    }
+
+  });
+
+}
 
 
   get contasFiltradas() {
