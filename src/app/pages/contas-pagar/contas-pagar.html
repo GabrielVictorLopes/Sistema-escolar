@@ -282,29 +282,12 @@
         <select
           [(ngModel)]="novaCategoria">
 
+          <option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.nome">
 
-          <option>
-            Material Escolar
-          </option>
+            {{ categoria.nome }}
 
-          <option>
-            Infraestrutura
-          </option>
-
-          <option>
-            Energia
-          </option>
-
-          <option>
-            Água
-          </option>
-
-          <option>
-            Internet
-          </option>
-
-          <option>
-            Salários
           </option>
 
         </select>

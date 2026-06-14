@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';  
 
 interface ContaPagar {
   id: number;
@@ -28,12 +29,15 @@ interface ContaPagar {
 })
 export class ContasPagar implements OnInit {
 
+  constructor(private http: HttpClient) {}
+
   abaAtiva = 'lista';
 
   buscaFornecedor = '';
   filtroStatus = '';
 
   contas: ContaPagar[] = [];
+  categorias: any[] = [];
 
   contaSelecionada: ContaPagar | null = null;
 
@@ -55,7 +59,10 @@ export class ContasPagar implements OnInit {
   novaMulta: number | null = null;
   novoCentroCusto = '';
 
+  
+
   ngOnInit(): void {
+     this.carregarCategorias();
 
     this.contas = [
       {
@@ -119,6 +126,30 @@ export class ContasPagar implements OnInit {
 
     ];
   }
+  carregarCategorias() {
+
+    this.http.get<any[]>(
+      'https://sistema-escolar-api-production.up.railway.app/categoria'
+    ).subscribe({
+
+      next: (dados) => {
+
+        this.categorias = dados;
+
+        if (dados.length > 0) {
+          this.novaCategoria = dados[0].nome;
+        }
+
+      },
+
+      error: (erro) => {
+        console.error(erro);
+      }
+
+    });
+
+  }
+
 
   get contasFiltradas() {
     return this.contas.filter(conta => {
