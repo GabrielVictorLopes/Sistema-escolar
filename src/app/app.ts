@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -15,5 +15,7 @@ import { CommonModule } from '@angular/common';
 export class App {
 
   menuAberto = false;
+
+  constructor(public router: Router) {}
 
 }

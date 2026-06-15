@@ -8,47 +8,60 @@ import { Faltas } from './pages/faltas/faltas';
 import { ContasReceber } from './pages/contas-receber/contas-receber';
 import { ContasPagar } from './pages/contas-pagar/contas-pagar';
 import { NotaFiscal } from './pages/nota-fiscal/nota-fiscal';
-
+import { LoginComponent } from './pages/login/login.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Home
+    redirectTo: 'login',
+    pathMatch: 'full'
   },
+
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+  path: 'home',
+  component: Home
+},
   {
     path: 'aluno',
     component: Aluno
   },
+
   {
     path: 'professor',
     component: Professor
   },
+
   {
     path: 'fornecedor',
     component: Fornecedor
   },
+
   {
     path: 'notas',
     component: Notas
   },
+
   {
     path: 'faltas',
     component: Faltas
   },
+
   {
     path: 'contas-receber',
     component: ContasReceber
   },
+
   {
     path: 'contas-pagar',
     component: ContasPagar
   },
+
   {
-  path: 'nota-fiscal',
-  component: NotaFiscal
-},
-{
-    path: 'home',
-    component: Home 
-  },
+    path: 'nota-fiscal',
+    component: NotaFiscal
+  }
 ];

@@ -2,6 +2,7 @@
 
   <!-- BOTÃO MENU -->
   <button
+    *ngIf="router.url !== '/login'"
     class="menu-toggle"
     (click)="menuAberto = !menuAberto">
 
@@ -11,13 +12,14 @@
 
   <!-- OVERLAY -->
   <div
+    *ngIf="menuAberto && router.url !== '/login'"
     class="overlay"
-    *ngIf="menuAberto"
     (click)="menuAberto = false">
   </div>
 
   <!-- SIDEBAR -->
   <aside
+    *ngIf="router.url !== '/login'"
     class="sidebar"
     [class.open]="menuAberto">
 
@@ -36,7 +38,7 @@
     </div>
 
     <div class="menu-group">
-      <h3>Cadastros-teste</h3>
+      <h3>Cadastros</h3>
 
       <a routerLink="/aluno" (click)="menuAberto = false">
         Cadastro de Aluno
