@@ -268,40 +268,43 @@
 
       <div class="form-group">
         <label>Fornecedor *</label>
+          <select [(ngModel)]="novoFornecedor">
 
-        <select [(ngModel)]="novoFornecedor">
+            <option value="">
+              Selecione um fornecedor
+            </option>
 
-          <option value="">
-            Selecione um fornecedor
-          </option>
+            <option
+              *ngFor="let fornecedor of fornecedores"
+              [value]="fornecedor.id">
 
-          <option
-            *ngFor="let fornecedor of fornecedores"
-            [value]="fornecedor.empresa">
+              {{ fornecedor.empresa }}
 
-            {{ fornecedor.empresa }}
+            </option>
 
-          </option>
+          </select>
 
-        </select>
 
       </div>
 
       <div class="form-group">
         <label>Categoria</label>
 
-        <select
-          [(ngModel)]="novaCategoria">
+          <select [(ngModel)]="novaCategoria">
 
-          <option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.nome">
+            <option value="">
+              Selecione uma categoria
+            </option>
 
-            {{ categoria.nome }}
+            <option
+              *ngFor="let categoria of categorias"
+              [value]="categoria.id">
 
-          </option>
+              {{ categoria.nome }}
 
-        </select>
+            </option>
+
+          </select>
 
       </div>
 

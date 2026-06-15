@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';  
+import { HttpClient } from '@angular/common/http';
 
 interface ContaPagar {
   id: number;
@@ -29,7 +29,7 @@ interface ContaPagar {
 })
 export class ContasPagar implements OnInit {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   abaAtiva = 'lista';
 
@@ -46,8 +46,8 @@ export class ContasPagar implements OnInit {
   pagamentoValor = 0;
   pagamentoForma = 'PIX';
 
-  novoFornecedor = '';
-  novaCategoria = '';
+  novoFornecedor: number | null = null;
+  novaCategoria: number | null = null;
   novaDescricao = '';
   novoValorTotal: number | null = null;
   novaDataEmissao = '';
@@ -60,11 +60,11 @@ export class ContasPagar implements OnInit {
   novaMulta: number | null = null;
   novoCentroCusto = '';
 
-  
+
 
   ngOnInit(): void {
-     this.carregarCategorias();
-     this.carregarFornecedores();
+    this.carregarCategorias();
+    this.carregarFornecedores();
 
     this.contas = [
       {
@@ -116,10 +116,10 @@ export class ContasPagar implements OnInit {
       {
         id: 5,
         fornecedor: 'Fornecedor Escolar LTDA',
-        categoria: 'Material Escolar', 
+        categoria: 'Material Escolar',
         descricao: 'Compra de materiais',
         valorTotal: 4000,
-        dataEmissao: '2026-06-01',  
+        dataEmissao: '2026-06-01',
         dataVencimento: '2026-06-15',
         status: 'Pago',
         formaPagamento: 'PIX',
@@ -139,7 +139,7 @@ export class ContasPagar implements OnInit {
         this.categorias = dados;
 
         if (dados.length > 0) {
-          this.novaCategoria = dados[0].nome;
+          this.novaCategoria = dados[0].id;
         }
 
       },
@@ -154,27 +154,27 @@ export class ContasPagar implements OnInit {
 
   carregarFornecedores() {
 
-  this.http.get<any[]>(
-    'https://sistema-escolar-api-production.up.railway.app/fornecedor'
-  ).subscribe({
+    this.http.get<any[]>(
+      'https://sistema-escolar-api-production.up.railway.app/fornecedor'
+    ).subscribe({
 
-    next: (dados) => {
+      next: (dados) => {
 
-      this.fornecedores = dados;
+        this.fornecedores = dados;
 
-      if (dados.length > 0 && !this.novoFornecedor) {
-        this.novoFornecedor = dados[0].empresa;
+        if (dados.length > 0 && !this.novoFornecedor) {
+          this.novoFornecedor = dados[0].id;
+        }
+
+      },
+
+      error: (erro) => {
+        console.error('Erro ao carregar fornecedores', erro);
       }
 
-    },
+    });
 
-    error: (erro) => {
-      console.error('Erro ao carregar fornecedores', erro);
-    }
-
-  });
-
-}
+  }
 
 
   get contasFiltradas() {
@@ -213,9 +213,19 @@ export class ContasPagar implements OnInit {
   }
 
   cadastrar() {
+    console.log({
+      fornecedor_id: this.novoFornecedor,
+      categoria_id: this.novaCategoria,
+      descricao: this.novaDescricao,
+      valor_total: this.novoValorTotal,
+      data_emissao: this.novaDataEmissao,
+      data_vencimento: this.novaDataVencimento,
+      status: this.novoStatus
+    });
 
     if (
       !this.novoFornecedor ||
+      !this.novaCategoria ||
       !this.novaDescricao ||
       !this.novoValorTotal ||
       !this.novaDataVencimento
@@ -224,32 +234,50 @@ export class ContasPagar implements OnInit {
       return;
     }
 
-    this.contas.push({
-      id: this.contas.length + 1,
-      fornecedor: this.novoFornecedor,
-      categoria: this.novaCategoria,
+    const dados = {
+      fornecedor_id: this.novoFornecedor,
+      categoria_id: this.novaCategoria,
       descricao: this.novaDescricao,
-      valorTotal: this.novoValorTotal,
-      dataEmissao: this.novaDataEmissao,
-      dataVencimento: this.novaDataVencimento,
+      valor_total: this.novoValorTotal,
+      data_emissao: this.novaDataEmissao,
+      data_vencimento: this.novaDataVencimento,
       status: this.novoStatus,
-      formaPagamento: this.novaFormaPagamento,
-      numeroParcela: this.novoNumeroParcela ?? undefined,
-      totalParcelas: this.novoTotalParcelas ?? undefined,
-      juros: this.novoJuros ?? undefined,
-      multa: this.novaMulta ?? undefined,
-      centroCusto: this.novoCentroCusto
+      juros: this.novoJuros ?? 0,
+      multa: this.novaMulta ?? 0,
+      numero_parcela: this.novoNumeroParcela,
+      total_parcelas: this.novoTotalParcelas,
+      centro_custo: this.novoCentroCusto,
+      codigo_boleto: null
+    };
+
+    this.http.post(
+      'https://sistema-escolar-api-production.up.railway.app/contas-pagar',
+      dados
+    ).subscribe({
+      next: () => {
+
+        alert('Conta cadastrada com sucesso!');
+
+        this.cancelar();
+
+        this.abaAtiva = 'lista';
+
+      },
+
+      error: (erro) => {
+
+        console.error(erro);
+
+        alert('Erro ao cadastrar conta.');
+
+      }
     });
 
-    alert('Conta cadastrada com sucesso!');
-
-    this.cancelar();
-    this.abaAtiva = 'lista';
   }
 
   cancelar() {
-    this.novoFornecedor = '';
-    this.novaCategoria = '';
+    this.novoFornecedor = null;
+    this.novaCategoria = null;
     this.novaDescricao = '';
     this.novoValorTotal = null;
     this.novaDataEmissao = '';
