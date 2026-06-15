@@ -1,134 +1,57 @@
 <div class="container">
 
   <div class="header-section">
-
     <h1>Contas a Pagar</h1>
-
+    <p>Total registros: {{ contas.length }}</p>
+    
     <div class="tab-container">
-
-      <button
-        class="tab-btn"
-        [class.active]="abaAtiva === 'lista'"
-        (click)="abaAtiva = 'lista'">
-
+      <button class="tab-btn" [class.active]="abaAtiva === 'lista'" (click)="abaAtiva = 'lista'">
         Visualizar Contas
-
       </button>
-
-      <button
-        class="tab-btn"
-        [class.active]="abaAtiva === 'cadastro'"
-        (click)="abaAtiva = 'cadastro'">
-
+      <button class="tab-btn" [class.active]="abaAtiva === 'cadastro'" (click)="abaAtiva = 'cadastro'">
         Novo Lançamento
-
       </button>
-
     </div>
   </div>
 
-  <!-- ABA LISTA -->
-
   <div *ngIf="abaAtiva === 'lista'">
 
-    <!-- MÉTRICAS -->
-
     <div class="metrics-grid">
-
       <div class="metric-card card-pago">
-
         <div class="metric-info">
-          <span class="metric-label">
-            Total Pago
-          </span>
-
-          <span class="metric-value">
-            {{
-              totalPago
-              | currency:'BRL':'symbol':'1.2-2':'pt-BR'
-            }}
-          </span>
+          <span class="metric-label">Total Pago</span>
+          <span class="metric-value">{{ totalPago | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
-
       </div>
 
       <div class="metric-card card-aberto">
-
         <div class="metric-info">
-          <span class="metric-label">
-            Total Aberto
-          </span>
-
-          <span class="metric-value">
-            {{
-              totalAberto
-              | currency:'BRL':'symbol':'1.2-2':'pt-BR'
-            }}
-          </span>
+          <span class="metric-label">Total Aberto</span>
+          <span class="metric-value">{{ totalAberto | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
-
       </div>
 
       <div class="metric-card card-vencido">
-
         <div class="metric-info">
-          <span class="metric-label">
-            Total Vencido
-          </span>
-
-          <span class="metric-value">
-            {{
-              totalVencido
-              | currency:'BRL':'symbol':'1.2-2':'pt-BR'
-            }}
-          </span>
+          <span class="metric-label">Total Vencido</span>
+          <span class="metric-value">{{ totalVencido | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
         </div>
-
       </div>
-
     </div>
-
-    <!-- FILTROS -->
 
     <div class="filters-bar">
+      <input type="text" placeholder="Buscar fornecedor..." [(ngModel)]="buscaFornecedor" class="filter-input" />
 
-      <input
-        type="text"
-        placeholder="Buscar fornecedor..."
-        [(ngModel)]="buscaFornecedor"
-        class="filter-input"
-      />
-
-      <select
-        [(ngModel)]="filtroStatus"
-        class="filter-select">
-
-        <option value="">
-          Todos os Status
-        </option>
-
-        <option value="Pago">
-          Pago
-        </option>
-
-        <option value="Aberto">
-          Aberto
-        </option>
-
-        <option value="Vencido">
-          Vencido
-        </option>
-
+      <select [(ngModel)]="filtroStatus" class="filter-select">
+        <option value="">Todos os Status</option>
+        <option value="Pago">Pago</option>
+        <option value="Aberto">Aberto</option>
+        <option value="Vencido">Vencido</option>
       </select>
-
     </div>
 
-    <!-- TABELA -->
-
     <div class="table-container">
-
       <table class="styled-table">
-
         <thead>
           <tr>
             <th>ID</th>
@@ -142,386 +65,163 @@
             <th>Ações</th>
           </tr>
         </thead>
-
         <tbody>
-
           <tr *ngFor="let conta of contasFiltradas">
-
             <td>#{{ conta.id }}</td>
-
+            <td>{{ conta.fornecedor }}</td>
+            <td>{{ conta.categoria }}</td>
+            <td>{{ conta.descricao }}</td>
+            <td>{{ conta.dataVencimento | date:'dd/MM/yyyy':'UTC' }}</td>
+            <td>{{ conta.valorTotal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
             <td>
-              {{ conta.fornecedor }}
-            </td>
-
-            <td>
-              {{ conta.categoria }}
-            </td>
-
-            <td>
-              {{ conta.descricao }}
-            </td>
-
-            <td>
-              {{
-                conta.dataVencimento
-                | date:'dd/MM/yyyy'
-              }}
-            </td>
-
-            <td>
-
-              {{
-                conta.valorTotal
-                | currency:'BRL'
-              }}
-
-            </td>
-
-            <td>
-
-              <span
-                class="status-badge"
-                [ngClass]="{
-                  'status-pago':
-                    conta.status === 'Pago',
-
-                  'status-aberto':
-                    conta.status === 'Aberto',
-
-                  'status-vencido':
-                    conta.status === 'Vencido'
+              <span class="status-badge" [ngClass]="{
+                  'status-pago': conta.status === 'Pago',
+                  'status-aberto': conta.status === 'Aberto',
+                  'status-vencido': conta.status === 'Vencido'
                 }">
-
                 {{ conta.status }}
-
               </span>
-
             </td>
-
             <td>
-
-              <span *ngIf="conta.numeroParcela">
-
-                {{
-                  conta.numeroParcela
-                }}/{{ conta.totalParcelas }}
-
-              </span>
-
-              <span
-                *ngIf="!conta.numeroParcela">
-
-                -
-
-              </span>
-
+              <span *ngIf="conta.numeroParcela">{{ conta.numeroParcela }}/{{ conta.totalParcelas }}</span>
+              <span *ngIf="!conta.numeroParcela">-</span>
             </td>
-
             <td>
-
               <div class="action-buttons">
-
-                <button
-                  *ngIf="
-                    conta.status !== 'Pago'
-                  "
-                  class="btn-action btn-pay"
-                  (click)="
-                    iniciarPagamento(conta)
-                  ">
-
+                <button *ngIf="conta.status !== 'Pago'" class="btn-action btn-pay" (click)="iniciarPagamento(conta)">
                   Pagar
-
                 </button>
-
-                <button
-                  class="btn-action btn-delete"
-                  (click)="
-                    excluir(conta.id)
-                  ">
-
+                <button class="btn-action btn-delete" (click)="excluir(conta.id)">
                   Excluir
-
                 </button>
-
               </div>
-
             </td>
-
           </tr>
-
+          <tr *ngIf="contasFiltradas.length === 0">
+            <td colspan="9" style="text-align: center; color: #64748b; padding: 40px; font-weight: 500;">
+              Nenhum registro de conta encontrado.
+            </td>
+          </tr>
         </tbody>
-
       </table>
-
     </div>
 
   </div>
 
-  <!-- ABA CADASTRO -->
-
   <div *ngIf="abaAtiva === 'cadastro'">
-
     <h2>Novo Lançamento</h2>
-
     <div class="form-grid">
-
       <div class="form-group">
         <label>Fornecedor *</label>
-          <select [(ngModel)]="novoFornecedor">
-
-            <option value="">
-              Selecione um fornecedor
-            </option>
-
-            <option
-              *ngFor="let fornecedor of fornecedores"
-              [value]="fornecedor.id">
-
-              {{ fornecedor.empresa }}
-
-            </option>
-
-          </select>
-
-
+        <select [(ngModel)]="novoFornecedor">
+          <option [ngValue]="null">Selecione um fornecedor</option>
+          <option *ngFor="let fornecedor of fornecedores" [ngValue]="fornecedor.id">
+            {{ fornecedor.empresa }}
+          </option>
+        </select>
       </div>
 
       <div class="form-group">
         <label>Categoria</label>
-
-          <select [(ngModel)]="novaCategoria">
-
-            <option value="">
-              Selecione uma categoria
-            </option>
-
-            <option
-              *ngFor="let categoria of categorias"
-              [value]="categoria.id">
-
-              {{ categoria.nome }}
-
-            </option>
-
-          </select>
-
+        <select [(ngModel)]="novaCategoria">
+          <option [ngValue]="null">Selecione uma categoria</option>
+          <option *ngFor="let categoria of categorias" [ngValue]="categoria.id">
+            {{ categoria.nome }}
+          </option>
+        </select>
       </div>
 
       <div class="form-group full-width">
         <label>Descrição *</label>
-
-        <input
-          type="text"
-          [(ngModel)]="novaDescricao"
-          placeholder="Coloque uma breve descrição"
-        />
+        <input type="text" [(ngModel)]="novaDescricao" placeholder="Coloque uma breve descrição" />
       </div>
 
       <div class="form-group">
         <label>Valor Total *</label>
-
-        <input
-          type="number"
-          [(ngModel)]="novoValorTotal"
-          placeholder="Coloque o valor total da conta"  
-        />
+        <input type="number" [(ngModel)]="novoValorTotal" placeholder="Coloque o valor total da conta" />
       </div>
 
       <div class="form-group">
         <label>Status</label>
-
-        <select
-          [(ngModel)]="novoStatus">
-
-          <option value="Aberto">
-            Aberto
-          </option>
-
-          <option value="Pago">
-            Pago
-          </option>
-
-          <option value="Vencido">
-            Vencido
-          </option>
-
+        <select [(ngModel)]="novoStatus">
+          <option value="Aberto">Aberto</option>
+          <option value="Pago">Pago</option>
+          <option value="Vencido">Vencido</option>
         </select>
-
       </div>
 
       <div class="form-group">
         <label>Data Emissão</label>
-
-        <input
-          type="date"
-          [(ngModel)]="novaDataEmissao"
-        />
+        <input type="date" [(ngModel)]="novaDataEmissao" />
       </div>
 
       <div class="form-group">
         <label>Data Vencimento *</label>
-
-        <input
-          type="date"
-          [(ngModel)]="novaDataVencimento"
-        />
+        <input type="date" [(ngModel)]="novaDataVencimento" />
       </div>
 
       <div class="form-group">
         <label>Centro de Custo</label>
-
-        <input
-          type="text"
-          [(ngModel)]="novoCentroCusto"
-          placeholder="Ex: Infraestrutura, Salários, etc."
-        />
+        <input type="text" [(ngModel)]="novoCentroCusto" placeholder="Ex: Infraestrutura, Salários, etc." />
       </div>
 
       <div class="form-group">
         <label>Juros</label>
-
-        <input
-          type="number"
-          [(ngModel)]="novoJuros"
-          placeholder="Coloque o valor dos juros, se houver"
-        />
+        <input type="number" [(ngModel)]="novoJuros" placeholder="0" />
       </div>
 
       <div class="form-group">
         <label>Multa</label>
-
-        <input
-          type="number"
-          [(ngModel)]="novaMulta"
-          placeholder="Coloque o valor da multa, se houver"
-        />
+        <input type="number" [(ngModel)]="novaMulta" placeholder="0" />
       </div>
 
       <div class="form-group">
         <label>Nº Parcela</label>
-
-        <input
-          type="number"
-          [(ngModel)]="novoNumeroParcela"
-          placeholder="Coloque o número da parcela"
-        />
+        <input type="number" [(ngModel)]="novoNumeroParcela" />
       </div>
 
       <div class="form-group">
         <label>Total Parcelas</label>
-
-        <input
-          type="number"
-          [(ngModel)]="novoTotalParcelas"
-          placeholder="Coloque o total de parcelas"
-        />
+        <input type="number" [(ngModel)]="novoTotalParcelas" />
       </div>
-
     </div>
 
     <div class="buttons">
-
-      <button
-        class="btn-primary"
-        (click)="cadastrar()">
-
-        Cadastrar
-
-      </button>
-
-      <button
-        class="btn-danger"
-        (click)="cancelar()">
-
-        Cancelar
-
-      </button>
-
+      <button class="btn-primary" (click)="cadastrar()">Cadastrar</button>
+      <button class="btn-danger" (click)="cancelar()">Cancelar</button>
     </div>
-
   </div>
 
-  <!-- MODAL -->
-
-  <div
-    class="modal-overlay"
-    *ngIf="contaSelecionada">
-
+  <div class="modal-overlay" *ngIf="contaSelecionada">
     <div class="modal-card">
-
       <h3>Pagar Conta</h3>
-
-      <p>
-        {{ contaSelecionada.fornecedor }}
-      </p>
+      <p>{{ contaSelecionada.fornecedor }}</p>
 
       <div class="form-group">
         <label>Data Pagamento</label>
-
-        <input
-          type="date"
-          [(ngModel)]="pagamentoData"
-        />
+        <input type="date" [(ngModel)]="pagamentoData" />
       </div>
 
       <div class="form-group">
         <label>Valor Pago</label>
-
-        <input
-          type="number"
-          [(ngModel)]="pagamentoValor"
-        />
+        <input type="number" [(ngModel)]="pagamentoValor" />
       </div>
 
       <div class="form-group">
         <label>Forma Pagamento</label>
-
-        <select
-          [(ngModel)]="pagamentoForma">
-
-          <option>
-            PIX
-          </option>
-
-          <option>
-            Dinheiro
-          </option>
-
-          <option>
-            Cartão
-          </option>
-
-          <option>
-            Transferência
-          </option>
-
+        <select [(ngModel)]="pagamentoForma">
+          <option>PIX</option>
+          <option>Dinheiro</option>
+          <option>Cartão</option>
+          <option>Transferência</option>
         </select>
-
       </div>
 
       <div class="buttons">
-
-        <button
-          class="btn-primary"
-          (click)="confirmarPagamento()">
-
-          Confirmar
-
-        </button>
-
-        <button
-          class="btn-danger"
-          (click)="cancelarPagamento()">
-
-          Cancelar
-
-        </button>
-
+        <button class="btn-primary" (click)="confirmarPagamento()">Confirmar</button>
+        <button class="btn-danger" (click)="cancelarPagamento()">Cancelar</button>
       </div>
-
     </div>
-
   </div>
 
 </div>
