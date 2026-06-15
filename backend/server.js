@@ -17,7 +17,6 @@ const pool = mysql.createPool({
 
 app.post('/fornecedor', async (req, res) => {
   try {
-
     const {
       empresa,
       cnpj,
@@ -65,18 +64,14 @@ app.post('/fornecedor', async (req, res) => {
     ]);
 
     res.json({ sucesso: true });
-
   } catch (erro) {
-
     console.error(erro);
     res.status(500).json({ erro: erro.message });
-
   }
 });
 
 app.post('/aluno', async (req, res) => {
   try {
-
     const {
       nome,
       cpf,
@@ -133,18 +128,14 @@ app.post('/aluno', async (req, res) => {
     ]);
 
     res.json({ sucesso: true });
-
   } catch (erro) {
-
     console.error(erro);
     res.status(500).json({ erro: erro.message });
-
   }
 });
 
 app.post('/professor', async (req, res) => {
   try {
-
     const {
       nome,
       cpf,
@@ -195,14 +186,195 @@ app.post('/professor', async (req, res) => {
     ]);
 
     res.json({ sucesso: true });
-
   } catch (erro) {
-
     console.error(erro);
     res.status(500).json({ erro: erro.message });
-
   }
 });
+
+app.get('/categoria', async (req, res) => {
+  try {
+    const [dados] = await pool.query(`
+      SELECT
+        id,
+        nome
+      FROM categoria
+      ORDER BY nome
+    `);
+    res.json(dados);
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).json({ erro: erro.message });
+  }
+});
+
+app.get('/fornecedor', async (req, res) => {
+  try {
+    const [dados] = await pool.query(`
+      SELECT
+        id,
+        empresa
+      FROM fornecedor
+      ORDER BY empresa
+    `);
+    res.json(dados);
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).json({ erro: erro.message });
+  }
+});
+
+app.post('/contas-pagar', async (req, res) => {
+  try {
+    const {
+      fornecedor_id,
+      categoria_id,
+      descricao,
+      valor_total,
+      data_emissao,
+      data_vencimento,
+      status,
+      juros,
+      multa,
+      numero_parcela,
+      total_parcelas,
+      centro_custo,
+      codigo_boleto
+    } = req.body;
+
+    await pool.query(`
+      INSERT INTO contas_pagar (
+        fornecedor_id,
+        categoria_id,
+        descricao,
+        valor_total,
+        data_emissao,
+        data_vencimento,
+        status,
+        juros,
+        multa,
+        numero_parcela,
+        total_parcelas,
+        centro_custo,
+        codigo_boleto
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [
+      fornecedor_id,
+      categoria_id,
+      descricao,
+      valor_total,
+      data_emissao,
+      data_vencimento,
+      status,
+      juros,
+      multa,
+      numero_parcela,
+      total_parcelas,
+      centro_custo,
+      codigo_boleto
+    ]);
+
+    res.json({ sucesso: true });
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).json({ erro: erro.message });
+  }
+});
+
+app.get('/contas-pagar', async (req, res) => {
+  try {
+    const [dados] = await pool.query(`
+      SELECT
+          cp.id,
+          f.empresa AS fornecedor,
+          c.nome AS categoria,
+          cp.descricao,
+          cp.valor_total AS valorTotal,
+          cp.data_vencimento AS dataVencimento,
+          cp.status,
+          cp.numero_parcela AS numeroParcela,
+          cp.total_parcelas AS totalParcelas
+      FROM contas_pagar cp
+      INNER JOIN fornecedor f
+        ON f.id = cp.fornecedor_id
+      INNER JOIN categoria c
+        ON c.id = cp.categoria_id
+      ORDER BY cp.id DESC
+    `);
+    res.json(dados);
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).json({ erro: erro.message });
+  }
+});
+
+/* ==================================================================
+  NOVA ROTA: ATUALIZAR STATUS DE PAGAMENTO DA CONTA (PUT)
+  ==================================================================
+*/
+/* ==================================================================
+  ROTA ATUALIZADA: REGISTRA O PAGAMENTO COMPLETO NO BANCO DE DADOS
+  ==================================================================
+*/
+app.put('/contas-pagar/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Captura os dados enviados pelo Angular vindos do modal de pagamento
+    const { 
+      status, 
+      data_pagamento, 
+      dataPagamento, 
+      valor_pago, 
+      valorPago, 
+      forma_pagamento, 
+      formaPagamento 
+    } = req.body;
+
+    // Normaliza as variáveis para garantir compatibilidade camelCase / snake_case
+    const finalStatus = status || 'Pago';
+    const finalData = data_pagamento || dataPagamento || new Date().toISOString().substring(0, 10);
+    const finalValor = valor_pago !== undefined ? valor_pago : (valorPago || 0);
+    const finalForma = forma_pagamento || formaPagamento || 'PIX';
+
+    // Executa a atualização com todas as novas colunas que criamos no banco
+    await pool.query(`
+      UPDATE contas_pagar 
+      SET 
+        status = ?, 
+        data_pagamento = ?,
+        valor_pago = ?,
+        forma_pagamento = ?
+      WHERE id = ?
+    `, [finalStatus, finalData, finalValor, finalForma, id]);
+
+    res.json({ 
+      sucesso: true, 
+      mensagem: `Conta #${id} paga com sucesso utilizando ${finalForma}!` 
+    });
+    
+  } catch (erro) {
+    console.error('Erro ao atualizar pagamento no banco:', erro);
+    res.status(500).json({ erro: erro.message });
+  }
+});
+
+/* ==================================================================
+  ROTA ADICIONAL: EXCLUIR CONTA (DELETE)
+  ==================================================================
+*/
+app.delete('/contas-pagar/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query('DELETE FROM contas_pagar WHERE id = ?', [id]);
+    res.json({ sucesso: true, mensagem: `Conta #${id} excluída com sucesso!` });
+  } catch (erro) {
+    console.error(erro);
+    res.status(500).json({ erro: erro.message });
+  }
+});
+
 
 const PORT = process.env.PORT || 3000;
 

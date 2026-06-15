@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 interface ContaPagar {
   id: number;
@@ -28,12 +29,16 @@ interface ContaPagar {
 })
 export class ContasPagar implements OnInit {
 
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
+
   abaAtiva = 'lista';
 
   buscaFornecedor = '';
   filtroStatus = '';
 
   contas: ContaPagar[] = [];
+  categorias: any[] = [];
+  fornecedores: any[] = [];
 
   contaSelecionada: ContaPagar | null = null;
 
@@ -41,8 +46,8 @@ export class ContasPagar implements OnInit {
   pagamentoValor = 0;
   pagamentoForma = 'PIX';
 
-  novoFornecedor = '';
-  novaCategoria = '';
+  novoFornecedor: number | null = null;
+  novaCategoria: number | null = null;
   novaDescricao = '';
   novoValorTotal: number | null = null;
   novaDataEmissao = '';
@@ -56,84 +61,88 @@ export class ContasPagar implements OnInit {
   novoCentroCusto = '';
 
   ngOnInit(): void {
+    this.carregarCategorias();
+    this.carregarFornecedores();
+    this.carregarContas();
+  }
 
-    this.contas = [
-      {
-        id: 1,
-        fornecedor: 'Fornecedor Escolar LTDA',
-        categoria: 'Material Escolar',
-        descricao: 'Compra de materiais',
-        valorTotal: 3500,
-        dataEmissao: '2026-06-01',
-        dataVencimento: '2026-06-15',
-        status: 'Aberto',
-        centroCusto: 'Pedagógico'
+  carregarCategorias() {
+    this.http.get<any[]>(
+      'https://sistema-escolar-api-production.up.railway.app/categoria'
+    ).subscribe({
+      next: (dados) => {
+        this.categorias = dados;
+        this.cdr.detectChanges();
       },
-      {
-        id: 2,
-        fornecedor: 'Companhia Energia',
-        categoria: 'Infraestrutura',
-        descricao: 'Conta de energia',
-        valorTotal: 1800,
-        dataEmissao: '2026-06-01',
-        dataVencimento: '2026-06-10',
-        status: 'Vencido',
-        multa: 50,
-        juros: 20,
-        centroCusto: 'Infraestrutura'
-      },
-      {
-        id: 3,
-        fornecedor: 'Serviços de Limpeza LTDA',
-        categoria: 'Limpeza',
-        descricao: 'Serviço de limpeza mensal',
-        valorTotal: 1200,
-        dataEmissao: '2026-06-01',
-        dataVencimento: '2026-06-15',
-        status: 'Aberto',
-        centroCusto: 'Administração'
-      },
-      {
-        id: 4,
-        fornecedor: 'Manutenção Predial LTDA',
-        categoria: 'Infraestrutura',
-        descricao: 'Serviço de manutenção predial',
-        valorTotal: 2500,
-        dataEmissao: '2026-06-01',
-        dataVencimento: '2026-06-20',
-        status: 'Aberto',
-        centroCusto: 'Infraestrutura'
-      },
-      {
-        id: 5,
-        fornecedor: 'Fornecedor Escolar LTDA',
-        categoria: 'Material Escolar', 
-        descricao: 'Compra de materiais',
-        valorTotal: 4000,
-        dataEmissao: '2026-06-01',  
-        dataVencimento: '2026-06-15',
-        status: 'Pago',
-        formaPagamento: 'PIX',
-        centroCusto: 'Pedagógico'
+      error: (erro) => {
+        console.error('Erro ao carregar categorias:', erro);
       }
+    });
+  }
 
-    ];
+  carregarFornecedores() {
+    this.http.get<any[]>(
+      'https://sistema-escolar-api-production.up.railway.app/fornecedor'
+    ).subscribe({
+      next: (dados) => {
+        this.fornecedores = dados;
+        if (dados.length > 0 && !this.novoFornecedor) {
+          this.novoFornecedor = dados[0].id;
+        }
+        this.cdr.detectChanges();
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar fornecedores', erro);
+      }
+    });
+  }
+
+  carregarContas() {
+    this.http.get<any[]>(
+      'https://sistema-escolar-api-production.up.railway.app/contas-pagar'
+    ).subscribe({
+      next: (dados) => {
+        if (!dados) return;
+
+        const contasMapeadas = dados.map(c => {
+          let fornNome = c.fornecedor || c.fornecedor_nome;
+          if (c.Fornecedor && c.Fornecedor.empresa) fornNome = c.Fornecedor.empresa;
+          if (c.fornecedor && c.fornecedor.empresa) fornNome = c.fornecedor.empresa;
+
+          let catNome = c.categoria || c.categoria_nome;
+          if (c.Categoria && c.Categoria.nome) catNome = c.Categoria.nome;
+          if (c.categoria && c.categoria.nome) catNome = c.categoria.nome;
+
+          return {
+            id: c.id,
+            fornecedor: fornNome || 'Não informado',
+            categoria: catNome || 'Geral',
+            descricao: c.descricao || '',
+            valorTotal: Number(c.valorTotal || c.valor_total || 0),
+            dataEmissao: c.dataEmissao || c.data_emissao || '',
+            dataVencimento: c.dataVencimento || c.data_vencimento || '',
+            status: c.status || 'Aberto',
+            numeroParcela: c.numeroParcela || c.numero_parcela,
+            totalParcelas: c.totalParcelas || c.total_parcelas
+          };
+        });
+
+        this.contas = [...contasMapeadas];
+        this.cdr.detectChanges();
+      },
+      error: (erro) => {
+        console.error('Erro ao carregar contas:', erro);
+      }
+    });
   }
 
   get contasFiltradas() {
+    if (!this.contas) return [];
     return this.contas.filter(conta => {
-
-      const busca =
-        !this.buscaFornecedor ||
-        conta.fornecedor
-          .toLowerCase()
-          .includes(this.buscaFornecedor.toLowerCase());
-
-      const status =
-        !this.filtroStatus ||
-        conta.status === this.filtroStatus;
-
-      return busca && status;
+      const nomeFornecedor = conta.fornecedor ? String(conta.fornecedor).toLowerCase() : '';
+      const bateFornecedor = !this.buscaFornecedor || nomeFornecedor.includes(this.buscaFornecedor.toLowerCase());
+      const bateStatus = !this.filtroStatus || conta.status === this.filtroStatus;
+      return bateFornecedor && bateStatus;
     });
   }
 
@@ -156,43 +165,45 @@ export class ContasPagar implements OnInit {
   }
 
   cadastrar() {
-
-    if (
-      !this.novoFornecedor ||
-      !this.novaDescricao ||
-      !this.novoValorTotal ||
-      !this.novaDataVencimento
-    ) {
-      alert('Preencha os campos obrigatórios.');
+    if (!this.novoFornecedor || !this.novaCategoria || !this.novaDescricao || !this.novoValorTotal || !this.novaDataVencimento) {
+      console.warn('Campos obrigatórios vazios.');
       return;
     }
 
-    this.contas.push({
-      id: this.contas.length + 1,
-      fornecedor: this.novoFornecedor,
-      categoria: this.novaCategoria,
+    const dados = {
+      fornecedor_id: this.novoFornecedor,
+      categoria_id: this.novaCategoria,
       descricao: this.novaDescricao,
-      valorTotal: this.novoValorTotal,
-      dataEmissao: this.novaDataEmissao,
-      dataVencimento: this.novaDataVencimento,
+      valor_total: this.novoValorTotal,
+      data_emissao: this.novaDataEmissao,
+      data_vencimento: this.novaDataVencimento,
       status: this.novoStatus,
-      formaPagamento: this.novaFormaPagamento,
-      numeroParcela: this.novoNumeroParcela ?? undefined,
-      totalParcelas: this.novoTotalParcelas ?? undefined,
-      juros: this.novoJuros ?? undefined,
-      multa: this.novaMulta ?? undefined,
-      centroCusto: this.novoCentroCusto
+      juros: this.novoJuros ?? 0,
+      multa: this.novaMulta ?? 0,
+      numero_parcela: this.novoNumeroParcela,
+      total_parcelas: this.novoTotalParcelas,
+      centro_custo: this.novoCentroCusto,
+      codigo_boleto: null
+    };
+
+    this.http.post(
+      'https://sistema-escolar-api-production.up.railway.app/contas-pagar',
+      dados
+    ).subscribe({
+      next: () => {
+        this.cancelar();
+        this.carregarContas();
+        this.abaAtiva = 'lista';
+      },
+      error: (erro) => {
+        console.error(erro);
+      }
     });
-
-    alert('Conta cadastrada com sucesso!');
-
-    this.cancelar();
-    this.abaAtiva = 'lista';
   }
 
   cancelar() {
-    this.novoFornecedor = '';
-    this.novaCategoria = '';
+    this.novoFornecedor = this.fornecedores.length > 0 ? this.fornecedores[0].id : null;
+    this.novaCategoria = null;
     this.novaDescricao = '';
     this.novoValorTotal = null;
     this.novaDataEmissao = '';
@@ -204,26 +215,40 @@ export class ContasPagar implements OnInit {
     this.novoJuros = null;
     this.novaMulta = null;
     this.novoCentroCusto = '';
+    this.cdr.detectChanges();
   }
 
   iniciarPagamento(conta: ContaPagar) {
     this.contaSelecionada = conta;
-    this.pagamentoValor = conta.valorTotal;
-    this.pagamentoData = '';
-    this.pagamentoForma = 'PIX';
+    this.pagamentoValor = conta.valorTotal; // Preenche automaticamente o valor total da conta
+    this.pagamentoData = new Date().toISOString().substring(0, 10); // Preenche com a data de hoje (AAAA-MM-DD)
+    this.pagamentoForma = 'PIX'; // Define PIX como padrão
   }
 
   confirmarPagamento() {
-
     if (!this.contaSelecionada) return;
 
-    this.contaSelecionada.status = 'Pago';
-    this.contaSelecionada.formaPagamento =
-      this.pagamentoForma;
+    // Monta o objeto exatamente como o backend espera receber
+    const dadosPagamento = {
+      status: 'Pago',
+      data_pagamento: this.pagamentoData,
+      valor_pago: this.pagamentoValor,
+      forma_pagamento: this.pagamentoForma
+    };
 
-    alert('Pagamento realizado!');
+    const url = `https://sistema-escolar-api-production.up.railway.app/contas-pagar/${this.contaSelecionada.id}`;
 
-    this.cancelarPagamento();
+    this.http.put(url, dadosPagamento).subscribe({
+      next: (resposta) => {
+        console.log('Pagamento processado no servidor:', resposta);
+        this.cancelarPagamento(); // Fecha o modal de forma limpa
+        this.carregarContas(); // Recarrega a tabela e atualiza os blocos de métricas na hora!
+      },
+      error: (erro) => {
+        console.error('Erro ao enviar requisição de pagamento:', erro);
+        alert('Não foi possível salvar o pagamento no servidor.');
+      }
+    });
   }
 
   cancelarPagamento() {
@@ -231,14 +256,23 @@ export class ContasPagar implements OnInit {
   }
 
   excluir(id: number) {
-
-    const confirmar = confirm(
-      'Deseja excluir esta conta?'
-    );
-
+    const confirmar = confirm('Deseja excluir esta conta?');
     if (!confirmar) return;
 
-    this.contas =
-      this.contas.filter(c => c.id !== id);
+    const url = `https://sistema-escolar-api-production.up.railway.app/contas-pagar/${id}`;
+
+    // Opcional: Enviando a deleção real para o banco via HTTP DELETE
+    this.http.delete(url).subscribe({
+      next: () => {
+        this.contas = this.contas.filter(c => c.id !== id);
+        this.carregarContas();
+      },
+      error: (erro) => {
+        console.error('Erro ao deletar conta no banco de dados:', erro);
+        // Fallback local se a API não possuir a rota DELETE mapeada ainda
+        this.contas = this.contas.filter(c => c.id !== id);
+        this.cdr.detectChanges();
+      }
+    });
   }
 }
